@@ -1,7 +1,7 @@
 units:
   ### the mcu is oriented with the usbc port facing to to the left
-  mcu_x: 34
-  mcu_y: 18
+  mcu_x: 18
+  mcu_y: 34
 points:
   zones:
     ####### keys #######
@@ -78,13 +78,14 @@ points:
       anchor: matrix_outer_home
       columns.mcu.rows.footprint:
         shift: [0.5cx, 1.1cy]
+        rotate: 0
         tags: [mcu]
 outlines:
   board:
     - what: polygon
       points:
         - ref: mcu_mcu_footprint
-          shift: [-0.5mcu_x, 0.5cy]
+          shift: [0.5mcu_x, 0.5mcu_y]
         - ref: matrix_ring_top
           shift: [-0.75cx, 0.75cy] 
         - ref: matrix_middle_top
@@ -123,7 +124,7 @@ outlines:
     - -_scroll_wheel
     - -_mcu
 pcbs:
-  sb_34:
+  keyboard:
     outlines.main.outline: board
     footprints:
       keys:
@@ -142,5 +143,5 @@ pcbs:
           from: "{{row_net}}"
           to: "{{colrow}}"
       mcu:
-        what: promicro
+        what: nicenano_pretty
         where: [mcu]

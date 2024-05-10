@@ -124,17 +124,18 @@ outlines:
     - -_mcu
 pcbs:
   sb_34:
+    outlines.main.outline: board
     footprints:
       keys:
         what: choc
-        where: true
+        where: [choc]
         params:
           from: "{{row_net}}"
           to: "{{column_net}}"
           keycaps: true
       diodes:
         what: diode
-        where: true
+        where: [choc, scroll_wheel]
         adjust:
           shift: [0, -4.7]
         params:

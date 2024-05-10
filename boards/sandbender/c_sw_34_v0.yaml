@@ -2,6 +2,7 @@ units:
   ### the mcu is oriented with the usbc port facing to to the left
   mcu_x: 18
   mcu_y: 34
+  mcu_rotate: 90
 points:
   zones:
     ####### keys #######
@@ -78,7 +79,7 @@ points:
       anchor: matrix_outer_home
       columns.mcu.rows.footprint:
         shift: [0.5cx, 1.1cy]
-        rotate: 0
+        rotate: mcu_rotate
         tags: [mcu]
 outlines:
   board:
@@ -145,3 +146,5 @@ pcbs:
       mcu:
         what: nicenano_pretty
         where: [mcu]
+        params:
+          rotate: mcu_rotate

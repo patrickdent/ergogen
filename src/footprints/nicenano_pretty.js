@@ -94,6 +94,8 @@ module.exports =  {
       P7_label: '',
       P8_label: '',
       P9_label: '',
+
+      rotate: 0,
     },
     body: p => {
       const get_pin_net_name = (p, pin_name) => {
@@ -192,13 +194,6 @@ module.exports =  {
         return traces
       }
 
-      const gen_jumper_points = (direction) => {
-        if (direction === "from") {
-          return '(xy -0.5 -0.625) (xy -0.25 -0.625) (xy 0.25 0) (xy -0.25 0.625) (xy -0.5 0.625)'
-        }
-        return '(xy -0.65 -0.625) (xy 0.5 -0.625) (xy 0.5 0.625) (xy -0.65 0.625) (xy -0.15 0)'
-      }
-
       const gen_socket_row = (row_num, pin_name_left, pin_name_right, show_via_labels, show_silk_labels) => {
         const row_offset_y = 2.54 * row_num
 
@@ -231,7 +226,7 @@ module.exports =  {
           (pad ${via_num_right} thru_hole circle (at 3.262 ${-12.7 + row_offset_y}) (size 0.8 0.8) (drill 0.4) (layers *.Cu *.Mask) ${net_right})
 
           ${''/* Jumper Pads - Front Left */}
-          (pad ${socket_hole_num_left} smd custom (at -5.5 ${-12.7 + row_offset_y}) (size 0.2 0.2) (layers F.Cu F.Mask) ${p.local_net(socket_hole_num_left).str}
+          (pad ${socket_hole_num_left} smd custom (at -5.5 ${-12.7 + row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers F.Cu F.Mask) ${p.local_net(socket_hole_num_left).str}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
@@ -239,7 +234,7 @@ module.exports =  {
                 (xy -0.5 -0.625) (xy -0.25 -0.625) (xy 0.25 0) (xy -0.25 0.625) (xy -0.5 0.625)
             ) (width 0))
           ))
-          (pad ${via_num_left} smd custom (at -4.775 ${-12.7 + row_offset_y}) (size 0.2 0.2) (layers F.Cu F.Mask) ${net_left}
+          (pad ${via_num_left} smd custom (at -4.775 ${-12.7 + row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers F.Cu F.Mask) ${net_left}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
@@ -249,25 +244,25 @@ module.exports =  {
           ))
 
           ${''/* Jumper Pads - Front Right */}
-          (pad ${via_num_right} smd custom (at 4.775 ${-12.7 + row_offset_y} 180) (size 0.2 0.2) (layers F.Cu F.Mask) ${net_right}
+          (pad ${via_num_right} smd custom (at 4.775 ${-12.7 + row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers F.Cu F.Mask) ${net_right}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
               (gr_poly (pts
-                ${gen_jumper_points("to")}
+                (xy -0.65 -0.625) (xy 0.5 -0.625) (xy 0.5 0.625) (xy -0.65 0.625) (xy -0.15 0)
             ) (width 0))
           ))
-          (pad ${socket_hole_num_right} smd custom (at 5.5 ${-12.7 + row_offset_y} 180) (size 0.2 0.2) (layers F.Cu F.Mask) ${p.local_net(socket_hole_num_right).str}
+          (pad ${socket_hole_num_right} smd custom (at 5.5 ${-12.7 + row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers F.Cu F.Mask) ${p.local_net(socket_hole_num_right).str}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
               (gr_poly (pts
-                ${gen_jumper_points("from")}
+                (xy -0.5 -0.625) (xy -0.25 -0.625) (xy 0.25 0) (xy -0.25 0.625) (xy -0.5 0.625)
             ) (width 0))
           ))
 
           ${''/* Jumper Pads - Back Left */}
-          (pad ${socket_hole_num_left} smd custom (at -5.5 ${-12.7 + row_offset_y}) (size 0.2 0.2) (layers B.Cu B.Mask) ${p.local_net(socket_hole_num_left).str}
+          (pad ${socket_hole_num_left} smd custom (at -5.5 ${-12.7 + row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers B.Cu B.Mask) ${p.local_net(socket_hole_num_left).str}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
@@ -276,7 +271,7 @@ module.exports =  {
             ) (width 0))
           ))
 
-          (pad ${via_num_right} smd custom (at -4.775 ${-12.7 + row_offset_y}) (size 0.2 0.2) (layers B.Cu B.Mask) ${net_right}
+          (pad ${via_num_right} smd custom (at -4.775 ${-12.7 + row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers B.Cu B.Mask) ${net_right}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
@@ -286,7 +281,7 @@ module.exports =  {
           ))
 
           ${''/* Jumper Pads - Back Right */}
-          (pad ${via_num_left} smd custom (at 4.775 ${-12.7 + row_offset_y} 180) (size 0.2 0.2) (layers B.Cu B.Mask) ${net_left}
+          (pad ${via_num_left} smd custom (at 4.775 ${-12.7 + row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers B.Cu B.Mask) ${net_left}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
@@ -294,7 +289,7 @@ module.exports =  {
                 (xy -0.65 0.625) (xy 0.5 0.625) (xy 0.5 -0.625) (xy -0.65 -0.625) (xy -0.15 0)
             ) (width 0))
           ))
-          (pad ${socket_hole_num_right} smd custom (at 5.5 ${-12.7 + row_offset_y} 180) (size 0.2 0.2) (layers B.Cu B.Mask) ${p.local_net(socket_hole_num_right).str}
+          (pad ${socket_hole_num_right} smd custom (at 5.5 ${-12.7 + row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers B.Cu B.Mask) ${p.local_net(socket_hole_num_right).str}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives

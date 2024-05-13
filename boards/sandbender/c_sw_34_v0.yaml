@@ -135,6 +135,8 @@ pcbs:
           from: "{{row_net}}"
           to: "{{column_net}}"
           keycaps: true
+          reverse: true
+          hotswap: true
       diodes:
         what: diode
         where: [choc, scroll_wheel]
@@ -148,3 +150,15 @@ pcbs:
         where: [mcu]
         params:
           rotate: mcu_rotate
+          show_silk_labels: false
+          show_instructions: false
+          P4: col_0
+          P5: col_1
+          P6: col_2
+          P7: col_3
+          P8: col_4
+          P9: col_5
+          P15: row_0
+          P14: row_1
+          P16: row_2
+          P10: row_3

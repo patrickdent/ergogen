@@ -303,19 +303,19 @@ module.exports =  {
           socket_row += `
 
             ${''/* Silkscreen Labels - Front */}
-            (fp_text user ${net_silk_front_left} (at -3 ${-12.7 + row_offset_y}) (layer F.SilkS)
-              (effects (font (size 1 1) (thickness 0.15)) (justify left))
+            (fp_text user ${net_silk_front_left} (at -3 ${-12.7 + row_offset_y} ${p.rotate}) (layer F.SilkS)
+              (effects (font (size 0.5 0.5) (thickness 0.15)) (justify left))
             )
-            (fp_text user ${net_silk_front_right} (at 3 ${-12.7 + row_offset_y}) (layer F.SilkS)
-              (effects (font (size 1 1) (thickness 0.15)) (justify right))
+            (fp_text user ${net_silk_front_right} (at 3 ${-12.7 + row_offset_y} ${p.rotate}) (layer F.SilkS)
+              (effects (font (size 0.5 0.5) (thickness 0.15)) (justify right))
             )
 
             ${''/* Silkscreen Labels - Back */}
-            (fp_text user ${net_silk_back_left} (at -3 ${-12.7 + row_offset_y} 180) (layer B.SilkS)
-              (effects (font (size 1 1) (thickness 0.15)) (justify right mirror))
+            (fp_text user ${net_silk_back_left} (at -3 ${-12.7 + row_offset_y} ${p.rotate + 180}) (layer B.SilkS)
+              (effects (font (size 0.5 0.5) (thickness 0.15)) (justify right mirror))
             )
-            (fp_text user ${net_silk_back_right} (at 3 ${-12.7 + row_offset_y} 180) (layer B.SilkS)
-              (effects (font (size 1 1) (thickness 0.15)) (justify left mirror))
+            (fp_text user ${net_silk_back_right} (at 3 ${-12.7 + row_offset_y} ${p.rotate + 180}) (layer B.SilkS)
+              (effects (font (size 0.5 0.5) (thickness 0.15)) (justify left mirror))
             )
           `
         }
@@ -323,18 +323,18 @@ module.exports =  {
         if(show_via_labels == true) {
           socket_row += `
             ${''/* Via Labels - Front */}
-            (fp_text user ${via_label_left} (at -3.262 ${-13.5 + row_offset_y}) (layer F.Fab)
+            (fp_text user ${via_label_left} (at -3.262 ${-13.5 + row_offset_y} ${p.rotate}) (layer F.Fab)
               (effects (font (size 0.5 0.5) (thickness 0.08)))
             )
-            (fp_text user ${via_label_right} (at 3.262 ${-13.5 + row_offset_y}) (layer F.Fab)
+            (fp_text user ${via_label_right} (at 3.262 ${-13.5 + row_offset_y} ${p.rotate}) (layer F.Fab)
               (effects (font (size 0.5 0.5) (thickness 0.08)))
             )
 
             ${''/* Via Labels - Back */}
-            (fp_text user ${via_label_left} (at -3.262 ${-13.5 + row_offset_y} 180) (layer B.Fab)
+            (fp_text user ${via_label_left} (at -3.262 ${-13.5 + row_offset_y} ${p.rotate + 180}) (layer B.Fab)
               (effects (font (size 0.5 0.5) (thickness 0.08)) (justify mirror))
             )
-            (fp_text user ${via_label_right} (at 3.262 ${-13.5 + row_offset_y} 180) (layer B.Fab)
+            (fp_text user ${via_label_right} (at 3.262 ${-13.5 + row_offset_y} ${p.rotate + 180}) (layer B.Fab)
               (effects (font (size 0.5 0.5) (thickness 0.08)) (justify mirror))
             )
           `

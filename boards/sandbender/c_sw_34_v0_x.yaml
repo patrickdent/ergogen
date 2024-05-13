@@ -78,7 +78,7 @@ points:
     mcu:
       anchor: matrix_outer_home
       columns.mcu.rows.footprint:
-        shift: [0.5cx, 1.1cy]
+        shift: [0.5cx, 1.1cy + 20]
         rotate: mcu_rotate
         tags: [mcu]
 outlines:

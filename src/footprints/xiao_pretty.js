@@ -113,27 +113,28 @@ module.exports =  {
       }
 
       const gen_traces_row = (row_num) => {
+        const row_offset_y = row_num * 2.54
         const traces = `
-          (segment (start ${ adjust_point(4.775, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(3.262, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer F.Cu) (net 1))
-          (segment (start ${ adjust_point(-4.335002, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(-3.610001, -11.974999 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-4.775, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(-4.335002, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-3.610001, -11.974999 + (row_num * 2.54)) }) (end ${ adjust_point(-2.913999, -11.974999 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-2.536999, -12.351999 + (row_num * 2.54)) }) (end ${ adjust_point(-2.536999, -12.363001 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-2.913999, -11.974999 + (row_num * 2.54)) }) (end ${ adjust_point(-2.536999, -12.351999 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-2.536999, -12.363001 + (row_num * 2.54)) }) (end ${ adjust_point(-2.45, -12.45 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(3.012, -12.45 + (row_num * 2.54)) }) (end ${ adjust_point(3.262, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-2.45, -12.45 + (row_num * 2.54)) }) (end ${ adjust_point(3.012, -12.45 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-4.775, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(-3.262, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer F.Cu) (net 13))
-          (segment (start ${ adjust_point(3.610001, -13.425001 + (row_num * 2.54)) }) (end ${ adjust_point(2.913999, -13.425001 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(4.335002, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(3.610001, -13.425001 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(4.775, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(4.335002, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(2.913999, -13.425001 + (row_num * 2.54)) }) (end ${ adjust_point(2.438998, -12.95 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(-3.012, -12.95 + (row_num * 2.54)) }) (end ${ adjust_point(-3.262, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(2.438998, -12.95 + (row_num * 2.54)) }) (end ${ adjust_point(-3.012, -12.95 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(-7.62, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(-5.5, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer F.Cu) (net 23))
-          (segment (start ${ adjust_point(-7.62, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(-5.5, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 23))
-          (segment (start ${ adjust_point(5.5, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(7.62, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer F.Cu) (net 24))
-          (segment (start ${ adjust_point(7.62, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(5.5, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 24))
+          (segment (start ${ adjust_point(4.775, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(3.262, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer F.Cu) (net 1))
+          (segment (start ${ adjust_point(-4.335002, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-3.610001, -11.974999 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(-4.775, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-4.335002, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(-3.610001, -11.974999 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-2.913999, -11.974999 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(-2.536999, -12.351999 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-2.536999, -12.363001 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(-2.913999, -11.974999 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-2.536999, -12.351999 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(-2.536999, -12.363001 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-2.45, -12.45 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(3.012, -12.45 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(3.262, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(-2.45, -12.45 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(3.012, -12.45 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(-4.775, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-3.262, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer F.Cu) (net 13))
+          (segment (start ${ adjust_point(3.610001, -13.425001 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(2.913999, -13.425001 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
+          (segment (start ${ adjust_point(4.335002, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(3.610001, -13.425001 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
+          (segment (start ${ adjust_point(4.775, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(4.335002, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
+          (segment (start ${ adjust_point(2.913999, -13.425001 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(2.438998, -12.95 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
+          (segment (start ${ adjust_point(-3.012, -12.95 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-3.262, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
+          (segment (start ${ adjust_point(2.438998, -12.95 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-3.012, -12.95 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
+          (segment (start ${ adjust_point(-7.62, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-5.5, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer F.Cu) (net 23))
+          (segment (start ${ adjust_point(-7.62, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-5.5, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 23))
+          (segment (start ${ adjust_point(5.5, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(7.62, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer F.Cu) (net 24))
+          (segment (start ${ adjust_point(7.62, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(5.5, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 24))
         `
 
         return traces
@@ -142,7 +143,8 @@ module.exports =  {
       const gen_traces = () => {
         let traces = '';
         for (let i = 0; i < pin_names.length; i++) {
-          row_traces = gen_traces_row(i)
+          // this has more to do about our specific pin count and will probably not work with more
+          row_traces = gen_traces_row(i - 1)
           traces += row_traces
         }
 
@@ -154,6 +156,8 @@ module.exports =  {
 
         const socket_hole_num_left = pin_names.length*2 - row_num
         const socket_hole_num_right = 1 + row_num
+        
+        // not sure how these numbers relate to row count
         const via_num_left = 124 - row_num
         const via_num_right = 1 + row_num
 
@@ -256,7 +260,6 @@ module.exports =  {
 
         if(show_silk_labels == true) {
           socket_row += `
-
             ${''/* Silkscreen Labels - Front */}
             (fp_text user ${net_silk_front_left} (at -3 ${-12.7 + row_offset_y} ${p.rotate}) (layer F.SilkS)
               (effects (font (size 0.5 0.5) (thickness 0.15)) (justify left))

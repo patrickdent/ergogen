@@ -2,7 +2,7 @@ units:
   ### the mcu is oriented with the usbc port facing to to the left
   mcu_x: 18
   mcu_y: 34
-  mcu_rotate: 90
+  mcu_rotate: 0
 points:
   zones:
     ####### keys #######

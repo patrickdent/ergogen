@@ -331,9 +331,16 @@ module.exports =  {
       // (fp_line (start -3.81 -${mcu_height/2}) (end -3.81 -${mcu_height/2 + 2.51}) (layer Dwgs.User) (width 0.15))
       // (fp_line (start -3.81 -${mcu_height/2 + 2.51}) (end 3.556 -${mcu_height/2 + 2.51}) (layer Dwgs.User) (width 0.15))
 
-
+      // 23.5x17.5mm
 
       const mcu_height = 4.034 + (pin_names.length * 2.545)
+
+      const mcu_xy = {
+        top: "-10.5",
+        bottom: "10.5",
+        left: "-8.9",
+        right: "8.9"
+      }
 
       console.log("mcu_height, ", mcu_height)
       const common_top = `
@@ -350,12 +357,114 @@ module.exports =  {
           (fp_line (start -2 -2) (end 2 -2) (layer F.SilkS) (width 0.12))
           (fp_line (start 2 -2) (end 2 2) (layer F.SilkS) (width 0.12))
           
+          ${'' /* outline */ }
+          (fp_line
+            (start -6.7 ${mcu_xy.bottom})
+            (end 6.7 ${mcu_xy.bottom})
+            (width 0.12)
+            (layer "F.SilkS")
+            (uuid "4cda8848-9259-46bc-b4fa-2aaba6cc7e9f")
+          )
+          (fp_line
+            (start -4 -11.7)
+            (end 4 -11.7)
+            (width 0.12)
+            (layer "F.SilkS")
+            (uuid "ee7c82d7-8cda-47ee-b037-4ceb4a1bd121")
+          )
+          (fp_line
+            (start -4 ${mcu_xy.top})
+            (end ${mcu_xy.left} ${mcu_xy.top})
+            (width 0.12)
+            (layer "F.SilkS")
+            (uuid "a8b524dd-deeb-4647-8be8-440a5dd432bd")
+          )
+          (fp_line
+            (start -4 ${mcu_xy.top})
+            (end -4 -11.7)
+            (width 0.12)
+            (layer "F.SilkS")
+            (uuid "f55b2d7e-7cc4-4f13-a3e3-e866f2fdd57b")
+          )
+          (fp_line
+            (start 4 -11.7)
+            (end 4 ${mcu_xy.top})
+            (width 0.12)
+            (layer "F.SilkS")
+            (uuid "4bdce033-d032-42e0-96ea-704874c6e060")
+          )
+          (fp_line
+            (start ${mcu_xy.right} ${mcu_xy.top})
+            (end 4 ${mcu_xy.top})
+            (width 0.12)
+            (layer "F.SilkS")
+            (uuid "50400bc4-0eae-413b-a82b-bbedda4b7534")
+          )
+          (fp_line
+            (start ${mcu_xy.left} ${mcu_xy.bottom})
+            (end ${mcu_xy.left} ${mcu_xy.top})
+            (width 0.1)
+            (layer "F.Fab")
+            (uuid "574b9430-aa7d-41fb-87bd-e12cf3915083")
+          )
+          (fp_line
+            (start ${mcu_xy.left} ${mcu_xy.top})
+            (end -4 ${mcu_xy.top})
+            (width 0.1)
+            (layer "F.Fab")
+            (uuid "b9c797c0-b877-4483-bca2-3fc0c7a998a3")
+          )
+          (fp_line
+            (start -4 -11.7)
+            (end 4 -11.7)
+            (width 0.1)
+            (layer "F.Fab")
+            (uuid "02f99459-0653-4ff9-9996-6983102832ef")
+          )
+          (fp_line
+            (start -4 ${mcu_xy.top})
+            (end -4 -11.7)
+            (width 0.1)
+            (layer "F.Fab")
+            (uuid "6d477637-1620-4cda-b746-70f4cf94d6c7")
+          )
+          (fp_line
+            (start 4 -11.7)
+            (end 4 ${mcu_xy.top})
+            (width 0.1)
+            (layer "F.Fab")
+            (uuid "83e1e158-09cc-4f8f-af38-b85b29e7cd99")
+          )
+          (fp_line
+            (start 4 ${mcu_xy.top})
+            (end ${mcu_xy.right} ${mcu_xy.top})
+            (width 0.1)
+            (layer "F.Fab")
+            (uuid "960f72a1-fd52-414b-9d66-43aae3112b85")
+          )
+          (fp_line
+            (start ${mcu_xy.right} ${mcu_xy.bottom})
+            (end ${mcu_xy.left} ${mcu_xy.bottom})
+            (width 0.1)
+            (layer "F.Fab")
+            (uuid "7416965a-1574-4acb-9011-b9f88b6f47b5")
+          )
+          (fp_line
+            (start 8.9 ${mcu_xy.top})
+            (end 8.9 ${mcu_xy.bottom})
+            (width 0.1)
+            (layer "F.Fab")
+            (uuid "d6414d27-0c75-4851-9791-5cae9721046e")
+          )
           ${''/* USB Socket Outline */}
+          ${'' /*
           (fp_line (start 3.556 -${mcu_height/2}) (end 3.556 -${mcu_height/2 - 1.524}) (layer Dwgs.User) (width 0.15))
           (fp_line (start -3.81 -${mcu_height/2 - 1.524}) (end -3.81 -${mcu_height/2}) (layer Dwgs.User) (width 0.15))
           (fp_line (start -3.81 -${mcu_height/2}) (end 3.556 -${mcu_height/2}) (layer Dwgs.User) (width 0.15))
+          */}
 
           ${''/* Courtyard Outline - each socket requires 2.545mm */}
+          ${'' /*
           (fp_line (start 8.89 3.79) (end 8.89 -${mcu_height/2 - 2.51}) (layer F.CrtYd) (width 0.15))
           (fp_line (start 8.89 -${mcu_height/2 - 4.034}) (end -8.89 -${mcu_height/2 - 4.034}) (layer F.CrtYd) (width 0.15))
           (fp_line (start -8.89 -${mcu_height/2 - 4.034}) (end -8.89 ${mcu_height/2 + 2.51}) (layer F.CrtYd) (width 0.15))
@@ -364,17 +473,22 @@ module.exports =  {
           (fp_line (start -8.89 -${mcu_height/2 - 4.034}) (end 8.89 -${mcu_height/2 - 4.034}) (layer B.CrtYd) (width 0.15))
           (fp_line (start 8.89 -${mcu_height/2 - 4.034}) (end 8.89 ${mcu_height/2 + 2.51}) (layer B.CrtYd) (width 0.15))
           (fp_line (start 8.89 ${mcu_height/2 + 2.51}) (end -8.89 ${mcu_height/2 + 2.51}) (layer B.CrtYd) (width 0.15))
-
+          */}
+          
           ${''/* Controller top part outline */}
+          ${'' /*
           (fp_line (start -8.89 -${mcu_height/2 - 1.524}) (end 8.89 -${mcu_height/2 - 1.524}) (layer F.Fab) (width 0.12))
           (fp_line (start -8.89 -${mcu_height/2 - 1.524}) (end -8.89 -${mcu_height/2 - 4.034}) (layer F.Fab) (width 0.12))
           (fp_line (start 8.89 -${mcu_height/2 - 1.524}) (end 8.89 -${mcu_height/2 - 4.034}) (layer F.Fab) (width 0.12))
           (fp_line (start -8.89 -${mcu_height/2 - 1.524}) (end -8.89 -${mcu_height/2 - 4.034}) (layer B.Fab) (width 0.12))
           (fp_line (start 8.89 -${mcu_height/2 - 1.524}) (end 8.89 -${mcu_height/2 - 4.034}) (layer B.Fab) (width 0.12))
           (fp_line (start -8.89 -${mcu_height/2 - 1.524}) (end 8.89 -${mcu_height/2 - 1.524}) (layer B.Fab) (width 0.12))
+          */}
+          
 
           ${''/* Socket outlines */}
-          (fp_line (start 6.29 -11.43) (end 8.95 -11.43) (layer F.SilkS) (width 0.12))
+          ${'' /*
+
           (fp_line (start 6.29 -${mcu_height/2 - 2.51}) (end 8.95 -${mcu_height/2 - 2.51}) (layer F.SilkS) (width 0.12))
           (fp_line (start 6.29 -${mcu_height/2 - 2.51}) (end 6.29 ${mcu_height/2 + 2.51}) (layer F.SilkS) (width 0.12))
           (fp_line (start 6.29 ${mcu_height/2 + 2.51}) (end 8.95 ${mcu_height/2 + 2.51}) (layer F.SilkS) (width 0.12))
@@ -383,7 +497,6 @@ module.exports =  {
           (fp_line (start -8.95 -${mcu_height/2 - 2.51}) (end -8.95 ${mcu_height/2 + 2.51}) (layer F.SilkS) (width 0.12))
           (fp_line (start -8.95 ${mcu_height/2 + 2.51}) (end -6.29 ${mcu_height/2 + 2.51}) (layer F.SilkS) (width 0.12))
           (fp_line (start -6.29 -${mcu_height/2 - 2.51}) (end -6.29 ${mcu_height/2 + 2.51}) (layer F.SilkS) (width 0.12))
-          (fp_line (start -8.95 -11.43) (end -6.29 -11.43) (layer B.SilkS) (width 0.12))
           (fp_line (start -6.29 -${mcu_height/2 - 2.51}) (end -8.95 -${mcu_height/2 - 2.51}) (layer B.SilkS) (width 0.12))
           (fp_line (start -6.29 -${mcu_height/2 - 2.51}) (end -6.29 ${mcu_height/2 + 2.51}) (layer B.SilkS) (width 0.12))
           (fp_line (start -6.29 ${mcu_height/2 + 2.51}) (end -8.95 ${mcu_height/2 + 2.51}) (layer B.SilkS) (width 0.12))
@@ -392,6 +505,7 @@ module.exports =  {
           (fp_line (start 8.95 -${mcu_height/2 - 2.51}) (end 8.95 ${mcu_height/2 + 2.51}) (layer B.SilkS) (width 0.12))
           (fp_line (start 8.95 ${mcu_height/2 + 2.51}) (end 6.29 ${mcu_height/2 + 2.51}) (layer B.SilkS) (width 0.12))
           (fp_line (start 6.29 -${mcu_height/2 - 2.51}) (end 6.29 ${mcu_height/2 + 2.51}) (layer B.SilkS) (width 0.12))
+          */}          
       `;
 
       const instructions = `
@@ -412,7 +526,7 @@ module.exports =  {
       return `
           ${''/* Controller*/}
           ${ common_top }
-          ${ socket_rows }
+          ${'' /* socket_rows */ }
           ${ p.show_instructions ? instructions : '' }
         )
 

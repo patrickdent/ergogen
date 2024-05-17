@@ -52,6 +52,14 @@ module.exports =  {
         ['P5', 'P13'],
         ['P11', 'P12'],
       ]
+      
+      // dimensions of main portion of the mcu
+      // does not include usb
+      const mcu_y = 10.5
+      const mcu_x = 8.9
+
+      // distance between pins
+      const pin_space = 2.54
 
       const get_pin_net_name = (p, pin_name) => {
         return p[pin_name].name;
@@ -111,30 +119,31 @@ module.exports =  {
         const point_str = `${nx.toFixed(2)} ${ny.toFixed(2)}`;
         return point_str;
       }
-
+      
+      // 12.7
       const gen_traces_row = (row_num) => {
-        const row_offset_y = row_num * 2.54
+        const row_offset_y = (row_num+2) * pin_space
         const traces = `
-          (segment (start ${ adjust_point(4.775, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(3.262, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer F.Cu) (net 1))
-          (segment (start ${ adjust_point(-4.335002, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-3.610001, -11.974999 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-4.775, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-4.335002, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-3.610001, -11.974999 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-2.913999, -11.974999 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-2.536999, -12.351999 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-2.536999, -12.363001 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-2.913999, -11.974999 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-2.536999, -12.351999 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-2.536999, -12.363001 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-2.45, -12.45 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(3.012, -12.45 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(3.262, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-2.45, -12.45 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(3.012, -12.45 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-4.775, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-3.262, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer F.Cu) (net 13))
-          (segment (start ${ adjust_point(3.610001, -13.425001 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(2.913999, -13.425001 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(4.335002, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(3.610001, -13.425001 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(4.775, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(4.335002, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(2.913999, -13.425001 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(2.438998, -12.95 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(-3.012, -12.95 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-3.262, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(2.438998, -12.95 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-3.012, -12.95 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(-7.62, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-5.5, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer F.Cu) (net 23))
-          (segment (start ${ adjust_point(-7.62, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(-5.5, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 23))
-          (segment (start ${ adjust_point(5.5, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(7.62, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer F.Cu) (net 24))
-          (segment (start ${ adjust_point(7.62, -12.7 + (mcu_height/2 + row_offset_y)) }) (end ${ adjust_point(5.5, -12.7 + (mcu_height/2 + row_offset_y)) }) (width 0.25) (layer B.Cu) (net 24))
+          (segment (start ${ adjust_point(4.775, (mcu_y - row_offset_y)) }) (end ${ adjust_point(3.262, (mcu_y - row_offset_y)) }) (width 0.25) (layer F.Cu) (net 1))
+          (segment (start ${ adjust_point(-4.335002, (mcu_y - row_offset_y)) }) (end ${ adjust_point(-3.610001, 0.72501 + (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(-4.775, (mcu_y - row_offset_y)) }) (end ${ adjust_point(-4.335002, (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(-3.610001, 0.72501 + (mcu_y - row_offset_y)) }) (end ${ adjust_point(-2.913999, 0.72501 + (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(-2.536999, 0.348001 + (mcu_y - row_offset_y)) }) (end ${ adjust_point(-2.536999, 0.336999 + (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(-2.913999, 0.72501 + (mcu_y - row_offset_y)) }) (end ${ adjust_point(-2.536999, 0.348001 + (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(-2.536999, 0.336999 + (mcu_y - row_offset_y)) }) (end ${ adjust_point(-2.45, 0.45 + (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(3.012, 0.45 + (mcu_y - row_offset_y)) }) (end ${ adjust_point(3.262, (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(-2.45, 0.45 + (mcu_y - row_offset_y)) }) (end ${ adjust_point(3.012, 0.45 + (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(-4.775, (mcu_y - row_offset_y)) }) (end ${ adjust_point(-3.262, (mcu_y - row_offset_y)) }) (width 0.25) (layer F.Cu) (net 13))
+          (segment (start ${ adjust_point(3.610001, -0.725001 + (mcu_y - row_offset_y)) }) (end ${ adjust_point(2.913999, -0.725001 + (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
+          (segment (start ${ adjust_point(4.335002, (mcu_y - row_offset_y)) }) (end ${ adjust_point(3.610001, -0.725001 + (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
+          (segment (start ${ adjust_point(4.775, (mcu_y - row_offset_y)) }) (end ${ adjust_point(4.335002, (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
+          (segment (start ${ adjust_point(2.913999, -0.725001 + (mcu_y - row_offset_y)) }) (end ${ adjust_point(2.438998, -0.15 + (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
+          (segment (start ${ adjust_point(-3.012, -0.15 + (mcu_y - row_offset_y)) }) (end ${ adjust_point(-3.262, (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
+          (segment (start ${ adjust_point(2.438998, -0.15 + (mcu_y - row_offset_y)) }) (end ${ adjust_point(-3.012, -0.15 + (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 13))
+          (segment (start ${ adjust_point(-7.62, (mcu_y - row_offset_y)) }) (end ${ adjust_point(-5.5, (mcu_y - row_offset_y)) }) (width 0.25) (layer F.Cu) (net 23))
+          (segment (start ${ adjust_point(-7.62, (mcu_y - row_offset_y)) }) (end ${ adjust_point(-5.5, (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 23))
+          (segment (start ${ adjust_point(5.5, (mcu_y - row_offset_y)) }) (end ${ adjust_point(7.62, (mcu_y - row_offset_y)) }) (width 0.25) (layer F.Cu) (net 24))
+          (segment (start ${ adjust_point(7.62, (mcu_y - row_offset_y)) }) (end ${ adjust_point(5.5, (mcu_y - row_offset_y)) }) (width 0.25) (layer B.Cu) (net 24))
         `
 
         return traces
@@ -152,7 +161,7 @@ module.exports =  {
       }
 
       const gen_socket_row = (row_num, pin_name_left, pin_name_right, show_via_labels, show_silk_labels) => {
-        const row_offset_y = 2.54 * row_num
+        const row_offset_y = (row_num+1) * pin_space
 
         const socket_hole_num_left = pin_names.length*2 - row_num
         const socket_hole_num_right = 1 + row_num
@@ -177,15 +186,15 @@ module.exports =  {
 
         let socket_row = `
           ${''/* Socket Holes */}
-          (pad ${socket_hole_num_left} thru_hole circle (at -7.62 ${mcu_height/2 - row_offset_y}) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask) ${p.local_net(socket_hole_num_left).str})
-          (pad ${socket_hole_num_right} thru_hole circle (at 7.62 ${mcu_height/2 - row_offset_y}) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask) ${p.local_net(socket_hole_num_right).str})
+          (pad ${socket_hole_num_left} thru_hole circle (at -7.62 ${mcu_y - row_offset_y}) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask) ${p.local_net(socket_hole_num_left).str})
+          (pad ${socket_hole_num_right} thru_hole circle (at 7.62 ${mcu_y - row_offset_y}) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask) ${p.local_net(socket_hole_num_right).str})
 
           ${''/* Inside VIAS */}
-          (pad ${via_num_left} thru_hole circle (at -3.262 ${mcu_height/2 - row_offset_y}) (size 0.8 0.8) (drill 0.4) (layers *.Cu *.Mask) ${net_left})
-          (pad ${via_num_right} thru_hole circle (at 3.262 ${mcu_height/2 - row_offset_y}) (size 0.8 0.8) (drill 0.4) (layers *.Cu *.Mask) ${net_right})
+          (pad ${via_num_left} thru_hole circle (at -3.262 ${mcu_y - row_offset_y}) (size 0.8 0.8) (drill 0.4) (layers *.Cu *.Mask) ${net_left})
+          (pad ${via_num_right} thru_hole circle (at 3.262 ${mcu_y - row_offset_y}) (size 0.8 0.8) (drill 0.4) (layers *.Cu *.Mask) ${net_right})
 
           ${''/* Jumper Pads - Front Left */}
-          (pad ${socket_hole_num_left} smd custom (at -5.5 ${mcu_height/2 - row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers F.Cu F.Mask) ${p.local_net(socket_hole_num_left).str}
+          (pad ${socket_hole_num_left} smd custom (at -5.5 ${mcu_y - row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers F.Cu F.Mask) ${p.local_net(socket_hole_num_left).str}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
@@ -193,7 +202,7 @@ module.exports =  {
                 (xy -0.5 -0.625) (xy -0.25 -0.625) (xy 0.25 0) (xy -0.25 0.625) (xy -0.5 0.625)
             ) (width 0))
           ))
-          (pad ${via_num_left} smd custom (at -4.775 ${mcu_height/2 - row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers F.Cu F.Mask) ${net_left}
+          (pad ${via_num_left} smd custom (at -4.775 ${mcu_y - row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers F.Cu F.Mask) ${net_left}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
@@ -203,7 +212,7 @@ module.exports =  {
           ))
 
           ${''/* Jumper Pads - Front Right */}
-          (pad ${via_num_right} smd custom (at 4.775 ${mcu_height/2 - row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers F.Cu F.Mask) ${net_right}
+          (pad ${via_num_right} smd custom (at 4.775 ${mcu_y - row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers F.Cu F.Mask) ${net_right}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
@@ -211,7 +220,7 @@ module.exports =  {
                 (xy -0.65 -0.625) (xy 0.5 -0.625) (xy 0.5 0.625) (xy -0.65 0.625) (xy -0.15 0)
             ) (width 0))
           ))
-          (pad ${socket_hole_num_right} smd custom (at 5.5 ${mcu_height/2 - row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers F.Cu F.Mask) ${p.local_net(socket_hole_num_right).str}
+          (pad ${socket_hole_num_right} smd custom (at 5.5 ${mcu_y - row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers F.Cu F.Mask) ${p.local_net(socket_hole_num_right).str}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
@@ -221,7 +230,7 @@ module.exports =  {
           ))
 
           ${''/* Jumper Pads - Back Left */}
-          (pad ${socket_hole_num_left} smd custom (at -5.5 ${mcu_height/2 - row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers B.Cu B.Mask) ${p.local_net(socket_hole_num_left).str}
+          (pad ${socket_hole_num_left} smd custom (at -5.5 ${mcu_y - row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers B.Cu B.Mask) ${p.local_net(socket_hole_num_left).str}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
@@ -230,7 +239,7 @@ module.exports =  {
             ) (width 0))
           ))
 
-          (pad ${via_num_right} smd custom (at -4.775 ${mcu_height/2 - row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers B.Cu B.Mask) ${net_right}
+          (pad ${via_num_right} smd custom (at -4.775 ${mcu_y - row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers B.Cu B.Mask) ${net_right}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
@@ -240,7 +249,7 @@ module.exports =  {
           ))
 
           ${''/* Jumper Pads - Back Right */}
-          (pad ${via_num_left} smd custom (at 4.775 ${mcu_height/2 - row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers B.Cu B.Mask) ${net_left}
+          (pad ${via_num_left} smd custom (at 4.775 ${mcu_y - row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers B.Cu B.Mask) ${net_left}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
@@ -248,7 +257,7 @@ module.exports =  {
                 (xy -0.65 0.625) (xy 0.5 0.625) (xy 0.5 -0.625) (xy -0.65 -0.625) (xy -0.15 0)
             ) (width 0))
           ))
-          (pad ${socket_hole_num_right} smd custom (at 5.5 ${mcu_height/2 - row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers B.Cu B.Mask) ${p.local_net(socket_hole_num_right).str}
+          (pad ${socket_hole_num_right} smd custom (at 5.5 ${mcu_y - row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers B.Cu B.Mask) ${p.local_net(socket_hole_num_right).str}
             (zone_connect 2)
             (options (clearance outline) (anchor rect))
             (primitives
@@ -327,14 +336,13 @@ module.exports =  {
       //                    
       // to calculate total height is 4.034 + n(2.545)
 
-      //           (fp_line (start 3.556 -${mcu_height/2 + 2.51}) (end 3.556 -${mcu_height/2}) (layer Dwgs.User) (width 0.15))
-      // (fp_line (start -3.81 -${mcu_height/2}) (end -3.81 -${mcu_height/2 + 2.51}) (layer Dwgs.User) (width 0.15))
-      // (fp_line (start -3.81 -${mcu_height/2 + 2.51}) (end 3.556 -${mcu_height/2 + 2.51}) (layer Dwgs.User) (width 0.15))
+      //           (fp_line (start 3.556 -${mcu_y + 2.51}) (end 3.556 -${mcu_y}) (layer Dwgs.User) (width 0.15))
+      // (fp_line (start -3.81 -${mcu_y}) (end -3.81 -${mcu_y + 2.51}) (layer Dwgs.User) (width 0.15))
+      // (fp_line (start -3.81 -${mcu_y + 2.51}) (end 3.556 -${mcu_y + 2.51}) (layer Dwgs.User) (width 0.15))
 
       // 23.5x17.5mm
 
       const mcu_height = 4.034 + (pin_names.length * 2.545)
-
       const mcu_xy = {
         top: "-10.5",
         bottom: "10.5",
@@ -357,10 +365,10 @@ module.exports =  {
           (fp_line (start -2 -2) (end 2 -2) (layer F.SilkS) (width 0.12))
           (fp_line (start 2 -2) (end 2 2) (layer F.SilkS) (width 0.12))
           
-          ${'' /* outline */ }
+          ${'' /* MCU outline */ }
           (fp_line
-            (start -6.7 ${mcu_xy.bottom})
-            (end 6.7 ${mcu_xy.bottom})
+            (start -6.7 ${mcu_y})
+            (end 6.7 ${mcu_y})
             (width 0.12)
             (layer "F.SilkS")
             (uuid "4cda8848-9259-46bc-b4fa-2aaba6cc7e9f")
@@ -373,14 +381,14 @@ module.exports =  {
             (uuid "ee7c82d7-8cda-47ee-b037-4ceb4a1bd121")
           )
           (fp_line
-            (start -4 ${mcu_xy.top})
-            (end ${mcu_xy.left} ${mcu_xy.top})
+            (start -4 ${-mcu_y})
+            (end ${-mcu_x} ${-mcu_y})
             (width 0.12)
             (layer "F.SilkS")
             (uuid "a8b524dd-deeb-4647-8be8-440a5dd432bd")
           )
           (fp_line
-            (start -4 ${mcu_xy.top})
+            (start -4 ${-mcu_y})
             (end -4 -11.7)
             (width 0.12)
             (layer "F.SilkS")
@@ -388,28 +396,28 @@ module.exports =  {
           )
           (fp_line
             (start 4 -11.7)
-            (end 4 ${mcu_xy.top})
+            (end 4 ${-mcu_y})
             (width 0.12)
             (layer "F.SilkS")
             (uuid "4bdce033-d032-42e0-96ea-704874c6e060")
           )
           (fp_line
-            (start ${mcu_xy.right} ${mcu_xy.top})
-            (end 4 ${mcu_xy.top})
+            (start ${mcu_x} ${-mcu_y})
+            (end 4 ${-mcu_y})
             (width 0.12)
             (layer "F.SilkS")
             (uuid "50400bc4-0eae-413b-a82b-bbedda4b7534")
           )
           (fp_line
-            (start ${mcu_xy.left} ${mcu_xy.bottom})
-            (end ${mcu_xy.left} ${mcu_xy.top})
+            (start ${-mcu_x} ${mcu_y})
+            (end ${-mcu_x} ${-mcu_y})
             (width 0.1)
             (layer "F.Fab")
             (uuid "574b9430-aa7d-41fb-87bd-e12cf3915083")
           )
           (fp_line
-            (start ${mcu_xy.left} ${mcu_xy.top})
-            (end -4 ${mcu_xy.top})
+            (start ${-mcu_x} ${-mcu_y})
+            (end -4 ${-mcu_y})
             (width 0.1)
             (layer "F.Fab")
             (uuid "b9c797c0-b877-4483-bca2-3fc0c7a998a3")
@@ -422,7 +430,7 @@ module.exports =  {
             (uuid "02f99459-0653-4ff9-9996-6983102832ef")
           )
           (fp_line
-            (start -4 ${mcu_xy.top})
+            (start -4 ${-mcu_y})
             (end -4 -11.7)
             (width 0.1)
             (layer "F.Fab")
@@ -430,81 +438,81 @@ module.exports =  {
           )
           (fp_line
             (start 4 -11.7)
-            (end 4 ${mcu_xy.top})
+            (end 4 ${-mcu_y})
             (width 0.1)
             (layer "F.Fab")
             (uuid "83e1e158-09cc-4f8f-af38-b85b29e7cd99")
           )
           (fp_line
-            (start 4 ${mcu_xy.top})
-            (end ${mcu_xy.right} ${mcu_xy.top})
+            (start 4 ${-mcu_y})
+            (end ${mcu_x} ${-mcu_y})
             (width 0.1)
             (layer "F.Fab")
             (uuid "960f72a1-fd52-414b-9d66-43aae3112b85")
           )
           (fp_line
-            (start ${mcu_xy.right} ${mcu_xy.bottom})
-            (end ${mcu_xy.left} ${mcu_xy.bottom})
+            (start ${mcu_x} ${mcu_y})
+            (end ${-mcu_x} ${mcu_y})
             (width 0.1)
             (layer "F.Fab")
             (uuid "7416965a-1574-4acb-9011-b9f88b6f47b5")
           )
           (fp_line
-            (start 8.9 ${mcu_xy.top})
-            (end 8.9 ${mcu_xy.bottom})
+            (start 8.9 ${-mcu_y})
+            (end 8.9 ${mcu_y})
             (width 0.1)
             (layer "F.Fab")
             (uuid "d6414d27-0c75-4851-9791-5cae9721046e")
           )
           ${''/* USB Socket Outline */}
           ${'' /*
-          (fp_line (start 3.556 -${mcu_height/2}) (end 3.556 -${mcu_height/2 - 1.524}) (layer Dwgs.User) (width 0.15))
-          (fp_line (start -3.81 -${mcu_height/2 - 1.524}) (end -3.81 -${mcu_height/2}) (layer Dwgs.User) (width 0.15))
-          (fp_line (start -3.81 -${mcu_height/2}) (end 3.556 -${mcu_height/2}) (layer Dwgs.User) (width 0.15))
+          (fp_line (start 3.556 -${mcu_y}) (end 3.556 -${mcu_y - 1.524}) (layer Dwgs.User) (width 0.15))
+          (fp_line (start -3.81 -${mcu_y - 1.524}) (end -3.81 -${mcu_y}) (layer Dwgs.User) (width 0.15))
+          (fp_line (start -3.81 -${mcu_y}) (end 3.556 -${mcu_y}) (layer Dwgs.User) (width 0.15))
           */}
 
           ${''/* Courtyard Outline - each socket requires 2.545mm */}
           ${'' /*
-          (fp_line (start 8.89 3.79) (end 8.89 -${mcu_height/2 - 2.51}) (layer F.CrtYd) (width 0.15))
-          (fp_line (start 8.89 -${mcu_height/2 - 4.034}) (end -8.89 -${mcu_height/2 - 4.034}) (layer F.CrtYd) (width 0.15))
-          (fp_line (start -8.89 -${mcu_height/2 - 4.034}) (end -8.89 ${mcu_height/2 + 2.51}) (layer F.CrtYd) (width 0.15))
-          (fp_line (start -8.89 ${mcu_height/2 + 2.51}) (end 8.89 ${mcu_height/2 + 2.51}) (layer F.CrtYd) (width 0.15))
-          (fp_line (start -8.89 ${mcu_height/2 + 2.51}) (end -8.89 -${mcu_height/2 - 4.034}) (layer B.CrtYd) (width 0.15))
-          (fp_line (start -8.89 -${mcu_height/2 - 4.034}) (end 8.89 -${mcu_height/2 - 4.034}) (layer B.CrtYd) (width 0.15))
-          (fp_line (start 8.89 -${mcu_height/2 - 4.034}) (end 8.89 ${mcu_height/2 + 2.51}) (layer B.CrtYd) (width 0.15))
-          (fp_line (start 8.89 ${mcu_height/2 + 2.51}) (end -8.89 ${mcu_height/2 + 2.51}) (layer B.CrtYd) (width 0.15))
+          (fp_line (start 8.89 3.79) (end 8.89 -${mcu_y - 2.51}) (layer F.CrtYd) (width 0.15))
+          (fp_line (start 8.89 -${mcu_y - 4.034}) (end -8.89 -${mcu_y - 4.034}) (layer F.CrtYd) (width 0.15))
+          (fp_line (start -8.89 -${mcu_y - 4.034}) (end -8.89 ${mcu_y + 2.51}) (layer F.CrtYd) (width 0.15))
+          (fp_line (start -8.89 ${mcu_y + 2.51}) (end 8.89 ${mcu_y + 2.51}) (layer F.CrtYd) (width 0.15))
+          (fp_line (start -8.89 ${mcu_y + 2.51}) (end -8.89 -${mcu_y - 4.034}) (layer B.CrtYd) (width 0.15))
+          (fp_line (start -8.89 -${mcu_y - 4.034}) (end 8.89 -${mcu_y - 4.034}) (layer B.CrtYd) (width 0.15))
+          (fp_line (start 8.89 -${mcu_y - 4.034}) (end 8.89 ${mcu_y + 2.51}) (layer B.CrtYd) (width 0.15))
+          (fp_line (start 8.89 ${mcu_y + 2.51}) (end -8.89 ${mcu_y + 2.51}) (layer B.CrtYd) (width 0.15))
           */}
           
           ${''/* Controller top part outline */}
           ${'' /*
-          (fp_line (start -8.89 -${mcu_height/2 - 1.524}) (end 8.89 -${mcu_height/2 - 1.524}) (layer F.Fab) (width 0.12))
-          (fp_line (start -8.89 -${mcu_height/2 - 1.524}) (end -8.89 -${mcu_height/2 - 4.034}) (layer F.Fab) (width 0.12))
-          (fp_line (start 8.89 -${mcu_height/2 - 1.524}) (end 8.89 -${mcu_height/2 - 4.034}) (layer F.Fab) (width 0.12))
-          (fp_line (start -8.89 -${mcu_height/2 - 1.524}) (end -8.89 -${mcu_height/2 - 4.034}) (layer B.Fab) (width 0.12))
-          (fp_line (start 8.89 -${mcu_height/2 - 1.524}) (end 8.89 -${mcu_height/2 - 4.034}) (layer B.Fab) (width 0.12))
-          (fp_line (start -8.89 -${mcu_height/2 - 1.524}) (end 8.89 -${mcu_height/2 - 1.524}) (layer B.Fab) (width 0.12))
+          (fp_line (start -8.89 -${mcu_y - 1.524}) (end 8.89 -${mcu_y - 1.524}) (layer F.Fab) (width 0.12))
+          (fp_line (start -8.89 -${mcu_y - 1.524}) (end -8.89 -${mcu_y - 4.034}) (layer F.Fab) (width 0.12))
+          (fp_line (start 8.89 -${mcu_y - 1.524}) (end 8.89 -${mcu_y - 4.034}) (layer F.Fab) (width 0.12))
+          (fp_line (start -8.89 -${mcu_y - 1.524}) (end -8.89 -${mcu_y - 4.034}) (layer B.Fab) (width 0.12))
+          (fp_line (start 8.89 -${mcu_y - 1.524}) (end 8.89 -${mcu_y - 4.034}) (layer B.Fab) (width 0.12))
+          (fp_line (start -8.89 -${mcu_y - 1.524}) (end 8.89 -${mcu_y - 1.524}) (layer B.Fab) (width 0.12))
           */}
           
 
           ${''/* Socket outlines */}
           ${'' /*
 
-          (fp_line (start 6.29 -${mcu_height/2 - 2.51}) (end 8.95 -${mcu_height/2 - 2.51}) (layer F.SilkS) (width 0.12))
-          (fp_line (start 6.29 -${mcu_height/2 - 2.51}) (end 6.29 ${mcu_height/2 + 2.51}) (layer F.SilkS) (width 0.12))
-          (fp_line (start 6.29 ${mcu_height/2 + 2.51}) (end 8.95 ${mcu_height/2 + 2.51}) (layer F.SilkS) (width 0.12))
-          (fp_line (start 8.95 -${mcu_height/2 - 2.51}) (end 8.95 ${mcu_height/2 + 2.51}) (layer F.SilkS) (width 0.12))
-          (fp_line (start -8.95 -${mcu_height/2 - 2.51}) (end -6.29 -${mcu_height/2 - 2.51}) (layer F.SilkS) (width 0.12))
-          (fp_line (start -8.95 -${mcu_height/2 - 2.51}) (end -8.95 ${mcu_height/2 + 2.51}) (layer F.SilkS) (width 0.12))
-          (fp_line (start -8.95 ${mcu_height/2 + 2.51}) (end -6.29 ${mcu_height/2 + 2.51}) (layer F.SilkS) (width 0.12))
-          (fp_line (start -6.29 -${mcu_height/2 - 2.51}) (end -6.29 ${mcu_height/2 + 2.51}) (layer F.SilkS) (width 0.12))
-          (fp_line (start -6.29 -${mcu_height/2 - 2.51}) (end -8.95 -${mcu_height/2 - 2.51}) (layer B.SilkS) (width 0.12))
-          (fp_line (start -6.29 -${mcu_height/2 - 2.51}) (end -6.29 ${mcu_height/2 + 2.51}) (layer B.SilkS) (width 0.12))
-          (fp_line (start -6.29 ${mcu_height/2 + 2.51}) (end -8.95 ${mcu_height/2 + 2.51}) (layer B.SilkS) (width 0.12))
-          (fp_line (start -8.95 -${mcu_height/2 - 2.51}) (end -8.95 ${mcu_height/2 + 2.51}) (layer B.SilkS) (width 0.12))
-          (fp_line (start 8.95 -${mcu_height/2 - 2.51}) (end 6.29 -${mcu_height/2 - 2.51}) (layer B.SilkS) (width 0.12))
-          (fp_line (start 8.95 -${mcu_height/2 - 2.51}) (end 8.95 ${mcu_height/2 + 2.51}) (layer B.SilkS) (width 0.12))
-          (fp_line (start 8.95 ${mcu_height/2 + 2.51}) (end 6.29 ${mcu_height/2 + 2.51}) (layer B.SilkS) (width 0.12))
-          (fp_line (start 6.29 -${mcu_height/2 - 2.51}) (end 6.29 ${mcu_height/2 + 2.51}) (layer B.SilkS) (width 0.12))
+          (fp_line (start 6.29 -${mcu_y - 2.51}) (end 8.95 -${mcu_y - 2.51}) (layer F.SilkS) (width 0.12))
+          (fp_line (start 6.29 -${mcu_y - 2.51}) (end 6.29 ${mcu_y + 2.51}) (layer F.SilkS) (width 0.12))
+          (fp_line (start 6.29 ${mcu_y + 2.51}) (end 8.95 ${mcu_y + 2.51}) (layer F.SilkS) (width 0.12))
+          (fp_line (start 8.95 -${mcu_y - 2.51}) (end 8.95 ${mcu_y + 2.51}) (layer F.SilkS) (width 0.12))
+          (fp_line (start -8.95 -${mcu_y - 2.51}) (end -6.29 -${mcu_y - 2.51}) (layer F.SilkS) (width 0.12))
+          (fp_line (start -8.95 -${mcu_y - 2.51}) (end -8.95 ${mcu_y + 2.51}) (layer F.SilkS) (width 0.12))
+          (fp_line (start -8.95 ${mcu_y + 2.51}) (end -6.29 ${mcu_y + 2.51}) (layer F.SilkS) (width 0.12))
+          (fp_line (start -6.29 -${mcu_y - 2.51}) (end -6.29 ${mcu_y + 2.51}) (layer F.SilkS) (width 0.12))
+          (fp_line (start -6.29 -${mcu_y - 2.51}) (end -8.95 -${mcu_y - 2.51}) (layer B.SilkS) (width 0.12))
+          (fp_line (start -6.29 -${mcu_y - 2.51}) (end -6.29 ${mcu_y + 2.51}) (layer B.SilkS) (width 0.12))
+          (fp_line (start -6.29 ${mcu_y + 2.51}) (end -8.95 ${mcu_y + 2.51}) (layer B.SilkS) (width 0.12))
+          (fp_line (start -8.95 -${mcu_y - 2.51}) (end -8.95 ${mcu_y + 2.51}) (layer B.SilkS) (width 0.12))
+          (fp_line (start 8.95 -${mcu_y - 2.51}) (end 6.29 -${mcu_y - 2.51}) (layer B.SilkS) (width 0.12))
+          (fp_line (start 8.95 -${mcu_y - 2.51}) (end 8.95 ${mcu_y + 2.51}) (layer B.SilkS) (width 0.12))
+          (fp_line (start 8.95 ${mcu_y + 2.51}) (end 6.29 ${mcu_y + 2.51}) (layer B.SilkS) (width 0.12))
+          (fp_line (start 6.29 -${mcu_y - 2.51}) (end 6.29 ${mcu_y + 2.51}) (layer B.SilkS) (width 0.12))
           */}          
       `;
 
@@ -526,7 +534,7 @@ module.exports =  {
       return `
           ${''/* Controller*/}
           ${ common_top }
-          ${'' /* socket_rows */ }
+          ${ socket_rows }
           ${ p.show_instructions ? instructions : '' }
         )
 

@@ -436,15 +436,54 @@ module.exports =  {
           jumpers: `
             ${gen_jumper_pad(socket_hole_num_left, row_num, y, p.rotate, net_left, p.local_net(socket_hole_num_left).str, -1, "F")}
             ${gen_jumper_pad(socket_hole_num_right, 124-row_num, y, p.rotate, net_right, p.local_net(socket_hole_num_right).str, 1, "F")}
-            ${gen_jumper_pad(socket_hole_num_left, row_num, y, p.rotate, net_left, p.local_net(socket_hole_num_left).str, -1, "B")}
-            ${gen_jumper_pad(socket_hole_num_right, 124-row_num, y, p.rotate, net_right, p.local_net(socket_hole_num_right).str, 1, "B")}
+
+            ${gen_jumper_pad(socket_hole_num_left, row_num, y, p.rotate, net_right, p.local_net(socket_hole_num_left).str, -1, "B")}
+            ${gen_jumper_pad(socket_hole_num_right, 124-row_num, y, p.rotate, net_left, p.local_net(socket_hole_num_right).str, 1, "B")}
           `,
           sockets: `
             ${gen_socket(socket_hole_num_left, y, p.local_net(socket_hole_num_left).str, -1)}
             ${gen_socket(socket_hole_num_right, y, p.local_net(socket_hole_num_right).str, 1)}
           `,
-          traces: row_traces
+          traces: `
+            ${gen_trace("F", y, 1)}
+            ${gen_trace("F", y, -1)}
+            ${gen_trace("B", y, 1)}
+            ${gen_trace("B", y, -1)}
+          `
         }
+      }
+
+      const gen_trace = (side, y, right) => {
+        if (side === "F") {
+          return `
+            (segment (start ${ adjust_point(right * 4.775, y) }) (end ${ adjust_point(right * 3.262, y) }) (width 0.25) (layer ${side}.Cu) (net 1))
+            (segment (start ${ adjust_point(right * 5.5, y) }) (end ${ adjust_point(right * 7.62, y) }) (width 0.25) (layer ${side}.Cu) (net 24))
+          `
+        }
+        return `
+          (segment (start ${ adjust_point(right * -4.335002, y) }) (end ${ adjust_point(right * -3.610001, right * 0.72501 + y) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(right * -4.775, y) }) (end ${ adjust_point(right * -4.335002, y) }) (width 0.25) (layer B.Cu) (net 1))
+
+          (segment (start ${ adjust_point(right * -3.610001, right * 0.72501 + y) }) (end ${ adjust_point(right * -2.913999, right * 0.72501 + y) }) (width 0.25) (layer B.Cu) (net 1))
+          
+          (segment (start ${ adjust_point(right * -2.913999, right * 0.72501 + y) }) (end ${ adjust_point(right * -2.45, right * 0.45 + y) }) (width 0.25) (layer B.Cu) (net 1))
+
+          (segment (start ${ adjust_point(right * -2.45, right * 0.45 + y) }) (end ${ adjust_point(right * 3.012, right * 0.45 + y) }) (width 0.25) (layer B.Cu) (net 1))
+          (segment (start ${ adjust_point(right * 3.012, right * 0.45 + y) }) (end ${ adjust_point(right * 3.262, y) }) (width 0.25) (layer B.Cu) (net 1))
+
+          (segment (start ${ adjust_point(right * -7.62, y) }) (end ${ adjust_point(right * -5.5, y) }) (width 0.25) (layer B.Cu) (net 23))
+        `
+
+        // (segment (start ${ adjust_point(4.335002, y) }) (end ${ adjust_point(3.610001, -0.725001 + y) }) (width 0.25) (layer B.Cu) (net 13))
+        // (segment (start ${ adjust_point(4.775, y) }) (end ${ adjust_point(4.335002, y) }) (width 0.25) (layer B.Cu) (net 13))
+        // (segment (start ${ adjust_point(3.610001, -0.725001 + y) }) (end ${ adjust_point(2.913999, -0.725001 + y) }) (width 0.25) (layer B.Cu) (net 13))
+        
+        // (segment (start ${ adjust_point(2.913999, -0.725001 + y) }) (end ${ adjust_point(2.438998, -0.15 + y) }) (width 0.25) (layer B.Cu) (net 13))
+        // (segment (start ${ adjust_point(-3.012, -0.15 + y) }) (end ${ adjust_point(-3.262, y) }) (width 0.25) (layer B.Cu) (net 13))
+        // (segment (start ${ adjust_point(2.438998, -0.15 + y) }) (end ${ adjust_point(-3.012, -0.15 + y) }) (width 0.25) (layer B.Cu) (net 13))
+        // (segment (start ${ adjust_point(-7.62, y) }) (end ${ adjust_point(-5.5, y) }) (width 0.25) (layer B.Cu) (net 23))
+        // (segment (start ${ adjust_point(7.62, y) }) (end ${ adjust_point(5.5, y) }) (width 0.25) (layer B.Cu) (net 24))
+
       }
 
       const gen_socket = (socket_num, y, socket_net, right) => {

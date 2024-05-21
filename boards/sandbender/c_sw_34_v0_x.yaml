@@ -66,14 +66,14 @@ points:
       rows:
         main.key:
           row_net: row_3
-    scroll:
-      anchor: matrix_middle_bottom
-      key:
-        tags: [scroll_wheel]
-      columns.wheel.rows.footprint:
-        column_net: col_3
-        row_net: row_3
-        shift: [-0.75cx, -1.5cy]
+    # scroll:
+    #   anchor: matrix_middle_bottom
+    #   key:
+    #     tags: [scroll_wheel]
+    #   columns.wheel.rows.footprint:
+    #     column_net: col_3
+    #     row_net: row_3
+    #     shift: [-0.75cx, -1.5cy]
     ###### other components #######
     mcu:
       anchor: matrix_outer_home
@@ -99,8 +99,8 @@ outlines:
           shift: [0.75cx, -0.75cy] 
         - ref: thumb_tuck_main
           shift: [-0.75cx, -0.75cy]
-        - ref: scroll_wheel_footprint
-          shift: [0.75cx, -0.75cy]
+        # - ref: scroll_wheel_footprint
+        #   shift: [0.75cx, -0.75cy]
         - ref: matrix_pinky_bottom
           shift: [-0.75cx, -0.75cy]  
         - ref: matrix_outer_home

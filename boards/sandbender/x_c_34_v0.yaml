@@ -1,8 +1,8 @@
 units:
   ### the mcu is oriented with the usbc port facing to to the left
-  mcu_x: 18
-  mcu_y: 34
-  mcu_rotate: 0
+  mcu_x: 21
+  mcu_y: 17.8
+  mcu_rotate: 180
 points:
   zones:
     ####### keys #######
@@ -13,31 +13,25 @@ points:
         tags: [choc]
         reversible: true
       columns:
-        outer:
-          key:
-            column_net: col_0
-          rows.top.skip: true
-          rows.bottom.skip: true
         pinky:
           key:
-            column_net: col_1
-          rows.top.skip: true
+            column_net: col_0
         ring:
           key:
             stagger: 0.75cy
-            column_net: col_2
+            column_net: col_1
         middle:
           key:
             stagger: 0.25cy
-            column_net: col_3
+            column_net: col_2
         index:
           key:
             stagger: -0.25cy
-            column_net: col_4
+            column_net: col_3
         inner:
           key:
             stagger: -0.25cy
-            column_net: col_5
+            column_net: col_4
       rows:
         bottom:
           key:
@@ -56,57 +50,50 @@ points:
       columns:
         tuck:
           key:
-            column_net: col_4
+            column_net: col_3
             shift: [-0.2cx, -1.75cy]
             rotate: 30
         rest:
           key:
-            column_net: col_5
+            column_net: col_4
             shift: [0, -1.5cy]
       rows:
         main.key:
           row_net: row_3
-    # scroll:
-    #   anchor: matrix_middle_bottom
-    #   key:
-    #     tags: [scroll_wheel]
-    #   columns.wheel.rows.footprint:
-    #     column_net: col_3
-    #     row_net: row_3
-    #     shift: [-0.75cx, -1.5cy]
     ###### other components #######
     mcu:
-      anchor: matrix_outer_home
+      anchor: matrix_middle_bottom
       columns.mcu.rows.footprint:
-        shift: [0.5cx, 1.1cy + 20]
+        shift: [-0.75cx, -1.5cy]
         rotate: mcu_rotate
         tags: [mcu]
 outlines:
   board:
     - what: polygon
+      fillet: 6
       points:
-        - ref: mcu_mcu_footprint
-          shift: [0.5mcu_x, 0.5mcu_y]
         - ref: matrix_ring_top
-          shift: [-0.75cx, 0.75cy] 
+          shift: [-0.55cx, 0.55cy] 
         - ref: matrix_middle_top
-          shift: [-0.75cx, 0.75cy]
+          shift: [-0.55cx, 0.55cy]
         - ref: matrix_middle_top
-          shift: [0.75cx, 0.75cy] 
+          shift: [0.55cx, 0.55cy] 
+        - ref: matrix_index_top
+          shift: [0.55cx, 0.55cy]
         - ref: matrix_inner_top
-          shift: [0.75cx, 0.75cy]
+          shift: [0.55cx, 0.55cy]
         - ref: thumb_rest_main
-          shift: [0.75cx, -0.75cy] 
+          shift: [0.55cx, -0.55cy] 
         - ref: thumb_tuck_main
-          shift: [-0.75cx, -0.75cy]
-        # - ref: scroll_wheel_footprint
-        #   shift: [0.75cx, -0.75cy]
+          shift: [-0.55cx, -0.55cy]
+        - ref: mcu_mcu_footprint
+          shift: [-0.5mcu_x, 0.6mcu_y]
+        - ref: mcu_mcu_footprint
+          shift: [0.5mcu_x, 0.6mcu_y]
         - ref: matrix_pinky_bottom
-          shift: [-0.75cx, -0.75cy]  
-        - ref: matrix_outer_home
-          shift: [-0.75cx, -0.75cy]
-        - ref: matrix_outer_home
-          shift: [-0.75cx, 0.75cy]
+          shift: [-0.55cx, -0.55cy]  
+        - ref: matrix_pinky_top
+          shift: [-0.55cx, 0.55cy]
   _key_caps:
     - what: rectangle
       where: [choc]
@@ -133,18 +120,18 @@ pcbs:
         where: [choc]
         params:
           from: "{{row_net}}"
-          to: "{{column_net}}"
+          to: "{{colrow}}"
           keycaps: true
           reverse: true
           hotswap: true
       diodes:
         what: diode
-        where: [choc, scroll_wheel]
+        where: [choc]
         adjust:
           shift: [0, -4.7]
         params:
-          from: "{{row_net}}"
-          to: "{{colrow}}"
+          from: "{{colrow}}"
+          to: "{{column_net}}"
       mcu:
         what: xiao_pretty
         where: [mcu]
@@ -152,12 +139,11 @@ pcbs:
           rotate: mcu_rotate
           show_silk_labels: false
           show_instructions: false
-          P3: col_0
-          P28: col_1
-          P29: col_2
-          P4: col_3
-          P5: col_4
-          P11: col_5
+          P28: col_0
+          P29: col_1
+          P4: col_2
+          P5: col_3
+          P11: col_4
           P15: row_0
           P14: row_1
           P13: row_2

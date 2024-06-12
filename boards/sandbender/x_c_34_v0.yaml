@@ -1,0 +1,147 @@
+units:
+  ### the mcu is oriented with the usbc port facing down
+  mcu_x: 21
+  mcu_y: 17.8
+  mcu_rotate: 180
+points:
+  zones:
+    ####### keys #######
+    matrix:
+      anchor: # center in kicad
+        shift: [150, -150]
+      key:
+        tags: [choc]
+        reversible: true
+      columns:
+        pinky:
+          key:
+            column_net: col_0
+        ring:
+          key:
+            stagger: 0.75cy
+            column_net: col_1
+        middle:
+          key:
+            stagger: 0.25cy
+            column_net: col_2
+        index:
+          key:
+            stagger: -0.25cy
+            column_net: col_3
+        inner:
+          key:
+            stagger: -0.25cy
+            column_net: col_4
+      rows:
+        bottom:
+          row_net: row_2
+        home:
+          row_net: row_1
+        top:
+          row_net: row_0
+    thumb:
+      anchor: matrix_index_bottom
+      key:
+        tags: [choc]
+        reversible: true
+      columns:
+        tuck:
+          key:
+            column_net: col_3
+            shift: [-0.2cx, -1.75cy]
+            rotate: 30
+        rest:
+          key:
+            column_net: col_4
+            shift: [0, -1.5cy]
+      rows:
+        main:
+          row_net: row_3
+    ###### other components #######
+    mcu:
+      anchor: matrix_middle_bottom
+      columns.mcu.rows.footprint:
+        shift: [-0.75cx, -1.5cy]
+        rotate: mcu_rotate
+        tags: [mcu]
+outlines:
+  board:
+    - what: polygon
+      fillet: 6
+      points:
+        - ref: matrix_ring_top
+          shift: [-0.55cx, 0.55cy] 
+        - ref: matrix_middle_top
+          shift: [-0.55cx, 0.55cy]
+        - ref: matrix_middle_top
+          shift: [0.55cx, 0.55cy] 
+        - ref: matrix_index_top
+          shift: [0.55cx, 0.55cy]
+        - ref: matrix_inner_top
+          shift: [0.55cx, 0.55cy]
+        - ref: thumb_rest_main
+          shift: [0.55cx, -0.55cy] 
+        - ref: thumb_tuck_main
+          shift: [-0.55cx, -0.55cy]
+        - ref: mcu_mcu_footprint
+          shift: [-0.5mcu_x, 0.6mcu_y]
+        - ref: mcu_mcu_footprint
+          shift: [0.5mcu_x, 0.6mcu_y]
+        - ref: matrix_pinky_bottom
+          shift: [-0.55cx, -0.55cy]  
+        - ref: matrix_pinky_top
+          shift: [-0.55cx, 0.55cy]
+  _key_caps:
+    - what: rectangle
+      where: [choc]
+      size: [17.5, 16.5]
+  _scroll_wheel:
+    - what: rectangle
+      where: [scroll_wheel]
+      size: [17.5, 15]
+  _mcu:
+    - what: rectangle
+      where: [mcu]
+      size: [mcu_x, mcu_y]
+  real_view:
+    - board
+    - -_key_caps
+    - -_scroll_wheel
+    - -_mcu
+pcbs:
+  keyboard:
+    outlines.main.outline: board
+    footprints:
+      keys:
+        what: choc
+        where: [choc]
+        params:
+          from: "{{colrow}}"
+          to: "{{column_net}}"
+          keycaps: true
+          reverse: true
+          hotswap: true
+      diodes:
+        what: diode
+        where: [choc]
+        adjust:
+          shift: [0, -4.7]
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+      mcu:
+        what: xiao_pretty
+        where: [mcu]
+        params:
+          rotate: mcu_rotate
+          show_silk_labels: false
+          show_instructions: false
+          P28: row_1
+          P29: row_2
+          P4: col_4
+          P5: col_3
+          P2: row_3
+          P3: row_0
+          P11: col_2
+          P15: col_0
+          P14: col_1

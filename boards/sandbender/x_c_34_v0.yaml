@@ -1,5 +1,5 @@
 units:
-  ### the mcu is oriented with the usbc port facing to to the left
+  ### the mcu is oriented with the usbc port facing down
   mcu_x: 21
   mcu_y: 17.8
   mcu_rotate: 180
@@ -34,14 +34,11 @@ points:
             column_net: col_4
       rows:
         bottom:
-          key:
-            row_net: row_2
+          row_net: row_2
         home:
-          key:
-            row_net: row_1
+          row_net: row_1
         top:
-          key:
-            row_net: row_0
+          row_net: row_0
     thumb:
       anchor: matrix_index_bottom
       key:
@@ -58,7 +55,7 @@ points:
             column_net: col_4
             shift: [0, -1.5cy]
       rows:
-        main.key:
+        main:
           row_net: row_3
     ###### other components #######
     mcu:
@@ -119,8 +116,8 @@ pcbs:
         what: choc
         where: [choc]
         params:
-          from: "{{row_net}}"
-          to: "{{colrow}}"
+          from: "{{colrow}}"
+          to: "{{column_net}}"
           keycaps: true
           reverse: true
           hotswap: true
@@ -131,7 +128,7 @@ pcbs:
           shift: [0, -4.7]
         params:
           from: "{{colrow}}"
-          to: "{{column_net}}"
+          to: "{{row_net}}"
       mcu:
         what: xiao_pretty
         where: [mcu]
@@ -139,12 +136,12 @@ pcbs:
           rotate: mcu_rotate
           show_silk_labels: false
           show_instructions: false
-          P28: col_0
-          P29: col_1
-          P4: col_2
+          P28: row_1
+          P29: row_2
+          P4: col_4
           P5: col_3
-          P11: col_4
-          P15: row_0
-          P14: row_1
-          P13: row_2
-          P12: row_3
+          P2: row_3
+          P3: row_0
+          P11: col_2
+          P15: col_0
+          P14: col_1

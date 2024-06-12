@@ -1,456 +1,305 @@
 // based off of: https://github.com/infused-kim/kb_ergogen_fp/blob/bdfc2b5798c74c01e57f01cb20778a68a4c0193c/nice_nano_pretty.js#L18
-// Author: @infused-kim
-//
-// A reversible footprint for the nice!nano (or any pro-micro compatible
-// controller) that uses jumpers instead of two rows socket rows to achieve
-// reversablity.
-//
-// This is a re-implementation of the promicro_pretty footprint made popular
-// by @benvallack.
-//
-// The following improvements have been made:
-//    1. It uses real traces instead of pads, which gets rid of hundreds of
-//       DRC errors.
-//    2. It leaves more space between the vias to allow easier routing through
-//       the middle of the footprint
-//
-//
-// # Placement and jumper soldering:
-// The footprint is meant to be used with a nice!nano (or any other pro micro
-// compatible board) that is placed on the top side of the PCB with the
-// components facing down.
-//
-// This means when you look down at it, the RAW pin is in the upper left
-// corner and the 006 pin in the upper right corner.
-//
-// To make it work in this configuration, you solder the jumpers on the
-// OPPOSITE side.
-//
-// Due to the way how this footprint works, you can also place it with the
-// components facing up or even at the bottom. You just need to make sure you
-// solder the jumpers on the correct side.
-//
-// Regardless, the silkscreen labels are displayed in location that match when
-// the controller is placed with the components facing down.
-//
-// # Credits
-// This footprint was created from scratch, but is based on the ideas from
-// these footprints:
-// https://github.com/Albert-IV/ergogen-contrib/blob/main/src/footprints/promicro_pretty.js
-// https://github.com/50an6xy06r6n/keyboard_reversible.pretty
 
 module.exports =  {
-    params: {
-      designator: 'MCU',
-      traces: true,
-      RAW: {type: 'net', value: 'RAW'},
-      GND: {type: 'net', value: 'GND'},
-      RST: {type: 'net', value: 'RST'},
-      VCC: {type: 'net', value: 'VCC'},
-      P21: {type: 'net', value: 'P21'},
-      P20: {type: 'net', value: 'P20'},
-      P19: {type: 'net', value: 'P19'},
-      P18: {type: 'net', value: 'P18'},
-      P15: {type: 'net', value: 'P15'},
-      P14: {type: 'net', value: 'P14'},
-      P16: {type: 'net', value: 'P16'},
-      P10: {type: 'net', value: 'P10'},
+  params: {
+    designator: 'MCU',
+    traces: true,
+    RAW: {type: 'net', value: 'RAW'},
+    GND: {type: 'net', value: 'GND'},
+    RST: {type: 'net', value: 'RST'},
+    VCC: {type: 'net', value: 'VCC'},
+    P21: {type: 'net', value: 'P21'},
+    P20: {type: 'net', value: 'P20'},
+    P19: {type: 'net', value: 'P19'},
+    P18: {type: 'net', value: 'P18'},
+    P15: {type: 'net', value: 'P15'},
+    P14: {type: 'net', value: 'P14'},
+    P16: {type: 'net', value: 'P16'},
+    P10: {type: 'net', value: 'P10'},
 
-      P1: {type: 'net', value: 'P1'},
-      P0: {type: 'net', value: 'P0'},
-      P2: {type: 'net', value: 'P2'},
-      P3: {type: 'net', value: 'P3'},
-      P4: {type: 'net', value: 'P4'},
-      P5: {type: 'net', value: 'P5'},
-      P6: {type: 'net', value: 'P6'},
-      P7: {type: 'net', value: 'P7'},
-      P8: {type: 'net', value: 'P8'},
-      P9: {type: 'net', value: 'P9'},
+    P1: {type: 'net', value: 'P1'},
+    P0: {type: 'net', value: 'P0'},
+    P2: {type: 'net', value: 'P2'},
+    P3: {type: 'net', value: 'P3'},
+    P4: {type: 'net', value: 'P4'},
+    P5: {type: 'net', value: 'P5'},
+    P6: {type: 'net', value: 'P6'},
+    P7: {type: 'net', value: 'P7'},
+    P8: {type: 'net', value: 'P8'},
+    P9: {type: 'net', value: 'P9'},
 
-      show_instructions: true,
-      show_silk_labels: true,
-      show_via_labels: true,
+    show_instructions: true,
+    show_silk_labels: true,
+    show_via_labels: true,
 
-      RAW_label: '',
-      GND_label: '',
-      RST_label: '',
-      VCC_label: '',
-      P21_label: '',
-      P20_label: '',
-      P19_label: '',
-      P18_label: '',
-      P15_label: '',
-      P14_label: '',
-      P16_label: '',
-      P10_label: '',
+    RAW_label: '',
+    GND_label: '',
+    RST_label: '',
+    VCC_label: '',
+    P21_label: '',
+    P20_label: '',
+    P19_label: '',
+    P18_label: '',
+    P15_label: '',
+    P14_label: '',
+    P16_label: '',
+    P10_label: '',
 
-      P1_label: '',
-      P0_label: '',
-      P2_label: '',
-      P3_label: '',
-      P4_label: '',
-      P5_label: '',
-      P6_label: '',
-      P7_label: '',
-      P8_label: '',
-      P9_label: '',
+    P1_label: '',
+    P0_label: '',
+    P2_label: '',
+    P3_label: '',
+    P4_label: '',
+    P5_label: '',
+    P6_label: '',
+    P7_label: '',
+    P8_label: '',
+    P9_label: '',
 
-      rotate: 0,
-    },
-    body: p => {
-      const get_pin_net_name = (p, pin_name) => {
-        return p[pin_name].name;
-      };
+    rotate: 0,
+  },
+  body: p => {
+    const pin_names = [
+      ['P1', 'RAW'],
+      ['P0', 'GND'],
+      ['GND', 'RST'],
+      ['GND', 'VCC'],
+      ['P2', 'P21'],
+      ['P3', 'P20'],
+      ['P4', 'P19'],
+      ['P5', 'P18'],
+      ['P6', 'P15'],
+      ['P7', 'P14'],
+      ['P8', 'P16'],
+      ['P9', 'P10'],
+    ]
+    
+    // dimensions of main portion of the mcu
+    // does not include usb
+    const mcu_y = 16.5
+    const mcu_x = 9
 
-      const get_pin_net_str = (p, pin_name) => {
-        return p[pin_name].str;
-      };
+    // distance between pins
+    const pin_space = 2.54
 
-      const get_pin_label_override = (p, pin_name) => {
-        prop_name = `${pin_name}_label`;
-        return p[prop_name];
-      };
+    const get_pin_net_str = (p, pin_name) => {
+      return p[pin_name].str;
+    };
 
-      const get_pin_label = (p, pin_name) => {
-        label = get_pin_label_override(p, pin_name);
-        if(label == '') {
-          label = get_pin_net_name(p, pin_name);
-        }
-
-        if(label === undefined) {
-          label = '""';
-        }
-
-        return label;
-      };
-
-      const get_at_coordinates = () => {
-        const pattern = /\(at (-?[\d\.]*) (-?[\d\.]*) (-?[\d\.]*)\)/;
-        const matches = p.at.match(pattern);
-        if (matches && matches.length == 4) {
-          return [parseFloat(matches[1]), parseFloat(matches[2]), parseFloat(matches[3])];
-        } else {
-          return null;
-        }
+    const get_at_coordinates = () => {
+      const pattern = /\(at (-?[\d\.]*) (-?[\d\.]*) (-?[\d\.]*)\)/;
+      const matches = p.at.match(pattern);
+      if (matches && matches.length == 4) {
+        return [parseFloat(matches[1]), parseFloat(matches[2]), parseFloat(matches[3])];
+      } else {
+        return null;
       }
+    }
 
-      const adjust_point = (x, y) => {
-        const at_l = get_at_coordinates();
-        if(at_l == null) {
-          throw new Error(
-            `Could not get x and y coordinates from p.at: ${p.at}`
-          );
-        }
-        const at_x = at_l[0];
-        const at_y = at_l[1];
-        const at_angle = at_l[2];
-        const adj_x = at_x + x;
-        const adj_y = at_y + y;
-
-        const radians = (Math.PI / 180) * at_angle,
-          cos = Math.cos(radians),
-          sin = Math.sin(radians),
-          nx = (cos * (adj_x - at_x)) + (sin * (adj_y - at_y)) + at_x,
-          ny = (cos * (adj_y - at_y)) - (sin * (adj_x - at_x)) + at_y;
-
-        const point_str = `${nx.toFixed(2)} ${ny.toFixed(2)}`;
-        return point_str;
+    const adjust_point = (x, y) => {
+      const at_l = get_at_coordinates();
+      if(at_l == null) {
+        throw new Error(
+          `Could not get x and y coordinates from p.at: ${p.at}`
+        );
       }
+      const at_x = at_l[0];
+      const at_y = at_l[1];
+      const at_angle = at_l[2];
+      const adj_x = at_x + x;
+      const adj_y = at_y + y;
 
-      const gen_traces_row = (row_num) => {
-        const traces = `
-          (segment (start ${ adjust_point(4.775, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(3.262, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer F.Cu) (net 1))
-          (segment (start ${ adjust_point(-4.335002, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(-3.610001, -11.974999 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-4.775, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(-4.335002, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-3.610001, -11.974999 + (row_num * 2.54)) }) (end ${ adjust_point(-2.913999, -11.974999 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-2.536999, -12.351999 + (row_num * 2.54)) }) (end ${ adjust_point(-2.536999, -12.363001 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-2.913999, -11.974999 + (row_num * 2.54)) }) (end ${ adjust_point(-2.536999, -12.351999 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-2.536999, -12.363001 + (row_num * 2.54)) }) (end ${ adjust_point(-2.45, -12.45 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(3.012, -12.45 + (row_num * 2.54)) }) (end ${ adjust_point(3.262, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-2.45, -12.45 + (row_num * 2.54)) }) (end ${ adjust_point(3.012, -12.45 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 1))
-          (segment (start ${ adjust_point(-4.775, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(-3.262, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer F.Cu) (net 13))
-          (segment (start ${ adjust_point(3.610001, -13.425001 + (row_num * 2.54)) }) (end ${ adjust_point(2.913999, -13.425001 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(4.335002, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(3.610001, -13.425001 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(4.775, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(4.335002, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(2.913999, -13.425001 + (row_num * 2.54)) }) (end ${ adjust_point(2.438998, -12.95 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(-3.012, -12.95 + (row_num * 2.54)) }) (end ${ adjust_point(-3.262, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(2.438998, -12.95 + (row_num * 2.54)) }) (end ${ adjust_point(-3.012, -12.95 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 13))
-          (segment (start ${ adjust_point(-7.62, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(-5.5, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer F.Cu) (net 23))
-          (segment (start ${ adjust_point(-7.62, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(-5.5, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 23))
-          (segment (start ${ adjust_point(5.5, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(7.62, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer F.Cu) (net 24))
-          (segment (start ${ adjust_point(7.62, -12.7 + (row_num * 2.54)) }) (end ${ adjust_point(5.5, -12.7 + (row_num * 2.54)) }) (width 0.25) (layer B.Cu) (net 24))
-        `
+      const radians = (Math.PI / 180) * at_angle,
+        cos = Math.cos(radians),
+        sin = Math.sin(radians),
+        nx = (cos * (adj_x - at_x)) + (sin * (adj_y - at_y)) + at_x,
+        ny = (cos * (adj_y - at_y)) - (sin * (adj_x - at_x)) + at_y;
 
-        return traces
-      }
+      const point_str = `${nx.toFixed(2)} ${ny.toFixed(2)}`;
+      return point_str;
+    }
 
-      const gen_traces = () => {
-        let traces = '';
-        for (let i = 0; i < 12; i++) {
-          row_traces = gen_traces_row(i)
-          traces += row_traces
-        }
-
-        return traces
-      }
-
-      const gen_socket_row = (row_num, pin_name_left, pin_name_right, show_via_labels, show_silk_labels) => {
-        const row_offset_y = 2.54 * row_num
-
-        const socket_hole_num_left = 24 - row_num
-        const socket_hole_num_right = 1 + row_num
-        const via_num_left = 124 - row_num
-        const via_num_right = 1 + row_num
-
-        const net_left = get_pin_net_str(p, pin_name_left)
-        const net_right = get_pin_net_str(p, pin_name_right)
-        const via_label_left = get_pin_label(p, pin_name_left)
-        const via_label_right = get_pin_label(p, pin_name_right)
-
-        // These are the silkscreen labels that will be printed on the PCB.
-        // They tell us the orientation if the controller is placed with
-        // the components down, on top of the PCB and the jumpers are
-        // soldered on the opposite side than the controller.
-        const net_silk_front_left = via_label_right
-        const net_silk_front_right = via_label_left
-        const net_silk_back_left = via_label_left
-        const net_silk_back_right = via_label_right
-
-        let socket_row = `
-          ${''/* Socket Holes */}
-          (pad ${socket_hole_num_left} thru_hole circle (at -7.62 ${-12.7 + row_offset_y}) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask) ${p.local_net(socket_hole_num_left).str})
-          (pad ${socket_hole_num_right} thru_hole circle (at 7.62 ${-12.7 + row_offset_y}) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask) ${p.local_net(socket_hole_num_right).str})
-
-          ${''/* Inside VIAS */}
-          (pad ${via_num_left} thru_hole circle (at -3.262 ${-12.7 + row_offset_y}) (size 0.8 0.8) (drill 0.4) (layers *.Cu *.Mask) ${net_left})
-          (pad ${via_num_right} thru_hole circle (at 3.262 ${-12.7 + row_offset_y}) (size 0.8 0.8) (drill 0.4) (layers *.Cu *.Mask) ${net_right})
-
-          ${''/* Jumper Pads - Front Left */}
-          (pad ${socket_hole_num_left} smd custom (at -5.5 ${-12.7 + row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers F.Cu F.Mask) ${p.local_net(socket_hole_num_left).str}
-            (zone_connect 2)
-            (options (clearance outline) (anchor rect))
-            (primitives
-              (gr_poly (pts
-                (xy -0.5 -0.625) (xy -0.25 -0.625) (xy 0.25 0) (xy -0.25 0.625) (xy -0.5 0.625)
-            ) (width 0))
-          ))
-          (pad ${via_num_left} smd custom (at -4.775 ${-12.7 + row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers F.Cu F.Mask) ${net_left}
-            (zone_connect 2)
-            (options (clearance outline) (anchor rect))
-            (primitives
-              (gr_poly (pts
-                (xy -0.65 -0.625) (xy 0.5 -0.625) (xy 0.5 0.625) (xy -0.65 0.625) (xy -0.15 0)
-            ) (width 0))
-          ))
-
-          ${''/* Jumper Pads - Front Right */}
-          (pad ${via_num_right} smd custom (at 4.775 ${-12.7 + row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers F.Cu F.Mask) ${net_right}
-            (zone_connect 2)
-            (options (clearance outline) (anchor rect))
-            (primitives
-              (gr_poly (pts
-                (xy -0.65 -0.625) (xy 0.5 -0.625) (xy 0.5 0.625) (xy -0.65 0.625) (xy -0.15 0)
-            ) (width 0))
-          ))
-          (pad ${socket_hole_num_right} smd custom (at 5.5 ${-12.7 + row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers F.Cu F.Mask) ${p.local_net(socket_hole_num_right).str}
-            (zone_connect 2)
-            (options (clearance outline) (anchor rect))
-            (primitives
-              (gr_poly (pts
-                (xy -0.5 -0.625) (xy -0.25 -0.625) (xy 0.25 0) (xy -0.25 0.625) (xy -0.5 0.625)
-            ) (width 0))
-          ))
-
-          ${''/* Jumper Pads - Back Left */}
-          (pad ${socket_hole_num_left} smd custom (at -5.5 ${-12.7 + row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers B.Cu B.Mask) ${p.local_net(socket_hole_num_left).str}
-            (zone_connect 2)
-            (options (clearance outline) (anchor rect))
-            (primitives
-              (gr_poly (pts
-                (xy -0.5 0.625) (xy -0.25 0.625) (xy 0.25 0) (xy -0.25 -0.625) (xy -0.5 -0.625)
-            ) (width 0))
-          ))
-
-          (pad ${via_num_right} smd custom (at -4.775 ${-12.7 + row_offset_y} ${p.rotate}) (size 0.2 0.2) (layers B.Cu B.Mask) ${net_right}
-            (zone_connect 2)
-            (options (clearance outline) (anchor rect))
-            (primitives
-              (gr_poly (pts
-                (xy -0.65 0.625) (xy 0.5 0.625) (xy 0.5 -0.625) (xy -0.65 -0.625) (xy -0.15 0)
-            ) (width 0))
-          ))
-
-          ${''/* Jumper Pads - Back Right */}
-          (pad ${via_num_left} smd custom (at 4.775 ${-12.7 + row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers B.Cu B.Mask) ${net_left}
-            (zone_connect 2)
-            (options (clearance outline) (anchor rect))
-            (primitives
-              (gr_poly (pts
-                (xy -0.65 0.625) (xy 0.5 0.625) (xy 0.5 -0.625) (xy -0.65 -0.625) (xy -0.15 0)
-            ) (width 0))
-          ))
-          (pad ${socket_hole_num_right} smd custom (at 5.5 ${-12.7 + row_offset_y} ${p.rotate + 180}) (size 0.2 0.2) (layers B.Cu B.Mask) ${p.local_net(socket_hole_num_right).str}
-            (zone_connect 2)
-            (options (clearance outline) (anchor rect))
-            (primitives
-              (gr_poly (pts
-                (xy -0.5 0.625) (xy -0.25 0.625) (xy 0.25 0) (xy -0.25 -0.625) (xy -0.5 -0.625)
-            ) (width 0))
-          ))
-        `
-
-        if(show_silk_labels == true) {
-          socket_row += `
-
-            ${''/* Silkscreen Labels - Front */}
-            (fp_text user ${net_silk_front_left} (at -3 ${-12.7 + row_offset_y} ${p.rotate}) (layer F.SilkS)
-              (effects (font (size 0.5 0.5) (thickness 0.15)) (justify left))
-            )
-            (fp_text user ${net_silk_front_right} (at 3 ${-12.7 + row_offset_y} ${p.rotate}) (layer F.SilkS)
-              (effects (font (size 0.5 0.5) (thickness 0.15)) (justify right))
-            )
-
-            ${''/* Silkscreen Labels - Back */}
-            (fp_text user ${net_silk_back_left} (at -3 ${-12.7 + row_offset_y} ${p.rotate + 180}) (layer B.SilkS)
-              (effects (font (size 0.5 0.5) (thickness 0.15)) (justify right mirror))
-            )
-            (fp_text user ${net_silk_back_right} (at 3 ${-12.7 + row_offset_y} ${p.rotate + 180}) (layer B.SilkS)
-              (effects (font (size 0.5 0.5) (thickness 0.15)) (justify left mirror))
-            )
-          `
-        }
-
-        if(show_via_labels == true) {
-          socket_row += `
-            ${''/* Via Labels - Front */}
-            (fp_text user ${via_label_left} (at -3.262 ${-13.5 + row_offset_y} ${p.rotate}) (layer F.Fab)
-              (effects (font (size 0.5 0.5) (thickness 0.08)))
-            )
-            (fp_text user ${via_label_right} (at 3.262 ${-13.5 + row_offset_y} ${p.rotate}) (layer F.Fab)
-              (effects (font (size 0.5 0.5) (thickness 0.08)))
-            )
-
-            ${''/* Via Labels - Back */}
-            (fp_text user ${via_label_left} (at -3.262 ${-13.5 + row_offset_y} ${p.rotate + 180}) (layer B.Fab)
-              (effects (font (size 0.5 0.5) (thickness 0.08)) (justify mirror))
-            )
-            (fp_text user ${via_label_right} (at 3.262 ${-13.5 + row_offset_y} ${p.rotate + 180}) (layer B.Fab)
-              (effects (font (size 0.5 0.5) (thickness 0.08)) (justify mirror))
-            )
-          `
-        }
-
-        return socket_row
-      }
-
-      const gen_socket_rows = (show_via_labels, show_silk_labels) => {
-        const pin_names = [
-          ['P1', 'RAW'],
-          ['P0', 'GND'],
-          ['GND', 'RST'],
-          ['GND', 'VCC'],
-          ['P2', 'P21'],
-          ['P3', 'P20'],
-          ['P4', 'P19'],
-          ['P5', 'P18'],
-          ['P6', 'P15'],
-          ['P7', 'P14'],
-          ['P8', 'P16'],
-          ['P9', 'P10'],
-        ]
-        let socket_rows = '';
-        for (let i = 0; i < pin_names.length; i++) {
-          pin_name_left = pin_names[i][0]
-          pin_name_right = pin_names[i][1]
-
-          const socket_row = gen_socket_row(
-            i, pin_name_left, pin_name_right,
-            show_via_labels, show_silk_labels
-          )
-
-          socket_rows += socket_row
-        }
-
-        return socket_rows
-      }
-
-      const common_top = `
-        (module nice_nano (layer F.Cu) (tedit 6451A4F1)
-          (attr virtual)
-          ${p.at /* parametric position */}
-          (fp_text reference "${p.ref}" (at 0 -15) (layer F.SilkS) ${p.ref_hide}
-            (effects (font (size 1 1) (thickness 0.15)))
-          )
-
-          ${''/* USB Socket Outline */}
-          (fp_line (start 3.556 -18.034) (end 3.556 -16.51) (layer Dwgs.User) (width 0.15))
-          (fp_line (start -3.81 -16.51) (end -3.81 -18.034) (layer Dwgs.User) (width 0.15))
-          (fp_line (start -3.81 -18.034) (end 3.556 -18.034) (layer Dwgs.User) (width 0.15))
-
-          ${''/* Courtyard Outline */}
-          (fp_line (start 8.89 16.51) (end 8.89 -14.03) (layer F.CrtYd) (width 0.15))
-          (fp_line (start 8.89 -14.03) (end -8.89 -14.03) (layer F.CrtYd) (width 0.15))
-          (fp_line (start -8.89 -14.03) (end -8.89 16.51) (layer F.CrtYd) (width 0.15))
-          (fp_line (start -8.89 16.51) (end 8.89 16.51) (layer F.CrtYd) (width 0.15))
-          (fp_line (start -8.89 16.51) (end -8.89 -14.03) (layer B.CrtYd) (width 0.15))
-          (fp_line (start -8.89 -14.03) (end 8.89 -14.03) (layer B.CrtYd) (width 0.15))
-          (fp_line (start 8.89 -14.03) (end 8.89 16.51) (layer B.CrtYd) (width 0.15))
-          (fp_line (start 8.89 16.51) (end -8.89 16.51) (layer B.CrtYd) (width 0.15))
-
-
-          ${''/* Controller top part outline */}
-          (fp_line (start -8.89 -16.51) (end 8.89 -16.51) (layer F.Fab) (width 0.12))
-          (fp_line (start -8.89 -16.51) (end -8.89 -14) (layer F.Fab) (width 0.12))
-          (fp_line (start 8.89 -16.51) (end 8.89 -14) (layer F.Fab) (width 0.12))
-          (fp_line (start -8.89 -16.5) (end -8.89 -13.99) (layer B.Fab) (width 0.12))
-          (fp_line (start 8.89 -16.51) (end 8.89 -14) (layer B.Fab) (width 0.12))
-          (fp_line (start -8.89 -16.51) (end 8.89 -16.51) (layer B.Fab) (width 0.12))
-
-          ${''/* Socket outlines */}
-          (fp_line (start 6.29 -11.43) (end 8.95 -11.43) (layer F.SilkS) (width 0.12))
-          (fp_line (start 6.29 -14.03) (end 8.95 -14.03) (layer F.SilkS) (width 0.12))
-          (fp_line (start 6.29 -14.03) (end 6.29 16.57) (layer F.SilkS) (width 0.12))
-          (fp_line (start 6.29 16.57) (end 8.95 16.57) (layer F.SilkS) (width 0.12))
-          (fp_line (start 8.95 -14.03) (end 8.95 16.57) (layer F.SilkS) (width 0.12))
-          (fp_line (start -8.95 -14.03) (end -6.29 -14.03) (layer F.SilkS) (width 0.12))
-          (fp_line (start -8.95 -14.03) (end -8.95 16.57) (layer F.SilkS) (width 0.12))
-          (fp_line (start -8.95 16.57) (end -6.29 16.57) (layer F.SilkS) (width 0.12))
-          (fp_line (start -6.29 -14.03) (end -6.29 16.57) (layer F.SilkS) (width 0.12))
-          (fp_line (start -8.95 -11.43) (end -6.29 -11.43) (layer B.SilkS) (width 0.12))
-          (fp_line (start -6.29 -14.03) (end -8.95 -14.03) (layer B.SilkS) (width 0.12))
-          (fp_line (start -6.29 -14.03) (end -6.29 16.57) (layer B.SilkS) (width 0.12))
-          (fp_line (start -6.29 16.57) (end -8.95 16.57) (layer B.SilkS) (width 0.12))
-          (fp_line (start -8.95 -14.03) (end -8.95 16.57) (layer B.SilkS) (width 0.12))
-          (fp_line (start 8.95 -14.03) (end 6.29 -14.03) (layer B.SilkS) (width 0.12))
-          (fp_line (start 8.95 -14.03) (end 8.95 16.57) (layer B.SilkS) (width 0.12))
-          (fp_line (start 8.95 16.57) (end 6.29 16.57) (layer B.SilkS) (width 0.12))
-          (fp_line (start 6.29 -14.03) (end 6.29 16.57) (layer B.SilkS) (width 0.12))
-      `;
-
-      const instructions = `
-          (fp_text user "R. Side - Jumper Here" (at 0 -15.245) (layer F.SilkS)
-            (effects (font (size 1 1) (thickness 0.15)))
-          )
-          (fp_text user "L. Side - Jumper Here" (at 0 -15.245) (layer B.SilkS)
-            (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
-          )
-    `
-
-      const socket_rows = gen_socket_rows(
-        p.show_via_labels, p.show_silk_labels
-      )
-      const traces = gen_traces()
-
-
+    const gen_courtyard = (side) => {
       return `
-          ${''/* Controller*/}
-          ${ common_top }
-          ${ socket_rows }
-          ${ p.show_instructions ? instructions : '' }
+        (fp_line (start ${mcu_x} ${mcu_y}) (end ${-mcu_x} ${mcu_y}) (width 0.15) (layer ${side}.CrtYd))
+        (fp_line (start ${-mcu_x} ${mcu_y}) (end ${-mcu_x} ${-mcu_y}) (width 0.15) (layer ${side}.CrtYd))
+        (fp_line (start ${-mcu_x} ${-mcu_y}) (end ${mcu_x} ${-mcu_y}) (width 0.15) (layer ${side}.CrtYd))
+        (fp_line (start ${mcu_x} ${-mcu_y}) (end ${mcu_x} ${mcu_y}) (width 0.15) (layer ${side}.CrtYd))
+      `
+    }
+
+    const gen_outline = (side) => {
+      const sign = -1
+      const usb_x = 4
+      const usb_clearnce = 2
+      return `
+        ${''/* bottom line */}
+        (fp_line (start -${6.7} ${mcu_y}) (end ${6.7} ${mcu_y}) (width 0.12) (layer "${side}.SilkS"))
+        
+        ${''/* usb */}
+        (fp_line (start -${usb_x} -${mcu_y+usb_clearnce}) (end ${usb_x} -${mcu_y+usb_clearnce}) (width 0.12) (layer "${side}.SilkS"))
+        (fp_line (start -${usb_x} -${mcu_y}) (end -${mcu_x} -${mcu_y}) (width 0.12) (layer "${side}.SilkS"))
+        (fp_line (start -${usb_x} -${mcu_y}) (end -${usb_x} -${mcu_y + usb_clearnce}) (width 0.12) (layer "${side}.SilkS"))
+        (fp_line (start ${usb_x} -${mcu_y + usb_clearnce}) (end ${usb_x} -${mcu_y}) (width 0.12) (layer "${side}.SilkS"))
+        (fp_line (start ${mcu_x} -${mcu_y}) (end ${usb_x} -${mcu_y}) (width 0.12) (layer "${side}.SilkS"))
+
+        (fp_line (start ${-mcu_x} ${mcu_y}) (end ${-mcu_x} ${-mcu_y}) (width 0.1) (layer "${side}.Fab"))
+        (fp_line (start ${-mcu_x} ${-mcu_y}) (end -4 ${-mcu_y}) (width 0.1) (layer "${side}.Fab"))
+        (fp_line (start -${usb_x} -${mcu_y + usb_clearnce}) (end ${usb_x} -${mcu_y + usb_clearnce}) (width 0.1) (layer "${side}.Fab"))
+        (fp_line (start -${usb_x} ${-mcu_y}) (end -${usb_x} -${mcu_y + usb_clearnce}) (width 0.1) (layer "${side}.Fab"))
+        (fp_line (start ${usb_x} -${mcu_y + usb_clearnce}) (end ${usb_x} ${-mcu_y}) (width 0.1) (layer "${side}.Fab"))
+        (fp_line (start ${usb_x} ${-mcu_y}) (end ${mcu_x} ${-mcu_y}) (width 0.1) (layer "${side}.Fab"))
+        (fp_line (start ${mcu_x} ${mcu_y}) (end ${-mcu_x} ${mcu_y}) (width 0.1) (layer "${side}.Fab"))
+        (fp_line (start 8.9 ${-mcu_y}) (end 8.9 ${mcu_y}) (width 0.1) (layer "${side}.Fab"))
+      `
+    }
+
+    const gen_config_by_row = () => {
+      let core = [];
+      let traces = [];
+      
+
+      for (let i = 0; i < pin_names.length; i++) {
+        pin_name_left = pin_names[i][0]
+        pin_name_right = pin_names[i][1]
+
+        const row_elements = gen_row_elements(
+          i, pin_name_left, pin_name_right
         )
 
-        ${''/* Traces */}
-        ${ p.traces ? traces : ''}
-    `;
+        core.push(row_elements.sockets)
+        core.push(row_elements.vias)
+        core.push(row_elements.jumpers)
+        
+        traces.push(row_elements.traces)
+      }
+      
+      return {
+        core: core.join("\n"),
+        traces: traces.join("\n")
+      }
     }
+
+    const gen_row_elements = (row_num, pin_name_left, pin_name_right) => {
+      const row_offset_y = (row_num+1.5) * pin_space
+      const y = - mcu_y + row_offset_y
+
+      const socket_hole_num_left = pin_names.length*2 - row_num
+      const socket_hole_num_right = row_num
+      
+      const net_left = get_pin_net_str(p, pin_name_left)
+      const net_right = get_pin_net_str(p, pin_name_right)
+
+      return {
+        vias: `
+          ${gen_via(y, row_num, net_left, -1)}
+          ${gen_via(y, 124-row_num, net_right, 1)}
+        `,
+        jumpers: `
+          ${gen_jumper_pad(socket_hole_num_left, row_num, y, p.rotate, net_left, p.local_net(socket_hole_num_left).str, -1, "F")}
+          ${gen_jumper_pad(socket_hole_num_right, 124-row_num, y, p.rotate, net_right, p.local_net(socket_hole_num_right).str, 1, "F")}
+
+          ${gen_jumper_pad(socket_hole_num_left, 124-row_num, y, p.rotate, net_right, p.local_net(socket_hole_num_left).str, -1, "B")}
+          ${gen_jumper_pad(socket_hole_num_right, row_num, y, p.rotate, net_left, p.local_net(socket_hole_num_right).str, 1, "B")}
+        `,
+        sockets: `
+          ${gen_socket(socket_hole_num_left, y, p.local_net(socket_hole_num_left).str, -1)}
+          ${gen_socket(socket_hole_num_right, y, p.local_net(socket_hole_num_right).str, 1)}
+        `,
+        traces: `
+          ${gen_trace("F", y, 1)}
+          ${gen_trace("F", y, -1)}
+          ${gen_trace("B", y, 1)}
+          ${gen_trace("B", y, -1)}
+        `
+      }
+    }
+
+    const gen_trace = (side, y, right) => {
+      if (side === "F") {
+        return `
+          (segment (start ${ adjust_point(right * 4.775, y) }) (end ${ adjust_point(right * 3.262, y) }) (width 0.25) (layer ${side}.Cu) (net 1))
+          (segment (start ${ adjust_point(right * 5.5, y) }) (end ${ adjust_point(right * 7.62, y) }) (width 0.25) (layer ${side}.Cu) (net 24))
+        `
+      }
+      return `
+        (segment (start ${ adjust_point(right * -4.335002, y) }) (end ${ adjust_point(right * -3.610001, right * 0.72501 + y) }) (width 0.25) (layer B.Cu) (net 1))
+        (segment (start ${ adjust_point(right * -4.775, y) }) (end ${ adjust_point(right * -4.335002, y) }) (width 0.25) (layer B.Cu) (net 1))
+
+        (segment (start ${ adjust_point(right * -3.610001, right * 0.72501 + y) }) (end ${ adjust_point(right * -2.913999, right * 0.72501 + y) }) (width 0.25) (layer B.Cu) (net 1))
+        
+        (segment (start ${ adjust_point(right * -2.913999, right * 0.72501 + y) }) (end ${ adjust_point(right * -2.45, right * 0.45 + y) }) (width 0.25) (layer B.Cu) (net 1))
+
+        (segment (start ${ adjust_point(right * -2.45, right * 0.45 + y) }) (end ${ adjust_point(right * 3.012, right * 0.45 + y) }) (width 0.25) (layer B.Cu) (net 1))
+        (segment (start ${ adjust_point(right * 3.012, right * 0.45 + y) }) (end ${ adjust_point(right * 3.262, y) }) (width 0.25) (layer B.Cu) (net 1))
+
+        (segment (start ${ adjust_point(right * -7.62, y) }) (end ${ adjust_point(right * -5.5, y) }) (width 0.25) (layer B.Cu) (net 23))
+      `
+    }
+
+    const gen_socket = (socket_num, y, socket_net, right) => {
+      return `
+        (pad ${socket_num} thru_hole circle (at ${right * 7.62} ${y}) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask) ${socket_net})
+      `
+    }
+
+    // Distance of vias from center line
+    const via_x = 3.262
+    const gen_via = (y, num, net, right) => {
+      return `
+        (pad ${num} thru_hole circle (at ${right * via_x} ${y}) (size 0.8 0.8) (drill 0.4) (layers *.Cu *.Mask) ${net})
+      `
+    }
+
+    // Distance of jumper pads from center line
+    const jumper_from_x = 5.5
+    const jumper_to_x = 4.775
+    const gen_jumper_pad = (socket_num, via_num, y, rotation, via_net, socket_net, right, side) => {
+      return `
+        (pad ${socket_num} smd custom (at ${right * jumper_from_x} ${y} ${rotation}) (size 0.2 0.2) (layers ${side}.Cu ${side}.Mask) ${socket_net}
+          (zone_connect 2)
+          (options (clearance outline) (anchor rect))
+          (primitives
+            (gr_poly (pts
+              (xy ${right * 0.5} ${right * 0.625}) (xy ${right * 0.25} ${right * 0.625}) (xy ${right * -0.25} 0) (xy ${right * 0.25} ${right * -0.625}) (xy ${right * 0.5} ${right * -0.625})
+          ) (width 0))
+        ))
+        (pad ${via_num} smd custom (at ${right * jumper_to_x} ${y} ${rotation}) (size 0.2 0.2) (layers ${side}.Cu ${side}.Mask) ${via_net}
+          (zone_connect 2)
+          (options (clearance outline) (anchor rect))
+          (primitives
+            (gr_poly (pts
+              (xy ${right * 0.65} ${right * 0.625}) (xy ${right * -0.5} ${right * 0.625}) (xy ${right * -0.5} ${right * -0.625}) (xy ${right * 0.65} ${right * -0.625}) (xy ${right * 0.15} 0)
+          ) (width 0))
+        ))
+      `
+    }
+
+    const config = gen_config_by_row(
+      p.show_via_labels, p.show_silk_labels
+    )
+
+    return `
+      ${''/* Controller*/}
+      (module nice_nano (layer F.Cu) (tedit 6451A4F1)
+        (attr virtual)
+        ${p.at /* parametric position */}
+        (fp_text reference "${p.ref}" (at 0 -15) (layer F.SilkS) ${p.ref_hide}
+          (effects (font (size 1 1) (thickness 0.15)))
+        )
+
+        ${'' /* MCU outline */ }
+        ${gen_outline("F")}
+        ${gen_outline("B")}
+
+        ${''/* Courtyard Outline */}     
+        ${gen_courtyard("F")}   
+        ${gen_courtyard("B")}  
+        ${ config.core }
+      )
+
+      ${''/* Traces */}
+      ${p.traces ? config.traces : ''}
+  `;
   }
+}

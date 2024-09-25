@@ -8,6 +8,7 @@ module.exports = {
     jumper: require('./jumper'),
     mx: require('./mx'),
     nicenano_pretty: require('./nicenano_pretty'),
+    niceview: require('./niceview'),
     oled: require('./oled'),
     omron: require('./omron'),
     pad: require('./pad'),

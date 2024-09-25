@@ -133,13 +133,31 @@ pcbs:
           rotate: mcu_rotate
           show_silk_labels: false
           show_instructions: false
-          P4: col_0
-          P5: col_1
-          P6: col_2
-          P7: col_3
-          P8: col_4
-          P9: col_5
+          GND: GND
+          VCC: VCC
+          P2: SDA
+          P3: SCL
+          P4: CS          
+          P5: col_0
+          P6: col_1
+          P7: col_2
+          P8: col_3
+          P9: col_4
           P15: row_0
           P14: row_1
           P16: row_2
           P10: row_3
+      niceview:
+        what: niceview
+        where: mcu
+        adjust:
+          shift: [0mcu_x, -0.5mcu_y - 2.54/2]
+          rotate: mcu_rotate - 30
+        params:
+          outline: true
+          side: 'F'
+          SDA: NN_SDA_CS
+          SCL: NN_SCL_GND
+          VCC: NN_VCC
+          GND: NN_GND_SCL
+          CS: NN_CS_SDA

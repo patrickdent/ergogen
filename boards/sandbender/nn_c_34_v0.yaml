@@ -151,7 +151,7 @@ pcbs:
         what: niceview
         where: mcu
         adjust:
-          shift: [0mcu_x, -0.5mcu_y - 2.54/2 - 2]
+          shift: [0mcu_x, -0.5mcu_y - 2.54/2 - 3]
           rotate: mcu_rotate - 30
         params:
           outline: true

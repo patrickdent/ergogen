@@ -151,13 +151,18 @@ pcbs:
         what: niceview
         where: mcu
         adjust:
-          shift: [0mcu_x, -0.5mcu_y - 2.54/2]
+          shift: [0mcu_x, -0.5mcu_y - 2.54/2 - 2]
           rotate: mcu_rotate - 30
         params:
           outline: true
           side: 'F'
-          SDA: NN_SDA_CS
-          SCL: NN_SCL_GND
-          VCC: NN_VCC
-          GND: NN_GND_SCL
-          CS: NN_CS_SDA
+          SDA_from: SDAorCS
+          SCL_from: SCLorGND
+          VCC_from: VCC
+          GND_from: GNDorSCL
+          CS_from: CSorSDA
+          SDA_to: SDA
+          SCL_to: SCL
+          VCC_to: VCC
+          GND_to: GND
+          CS_to: CS

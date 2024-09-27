@@ -1,4 +1,5 @@
 // based off of: https://github.com/infused-kim/kb_ergogen_fp/blob/bdfc2b5798c74c01e57f01cb20778a68a4c0193c/nice_nano_pretty.js#L18
+const adjust_point = require('./utils').adjust_point;
 
 module.exports =  {
   params: {
@@ -85,39 +86,6 @@ module.exports =  {
     const get_pin_net_str = (p, pin_name) => {
       return p[pin_name].str;
     };
-
-    const get_at_coordinates = () => {
-      const pattern = /\(at (-?[\d\.]*) (-?[\d\.]*) (-?[\d\.]*)\)/;
-      const matches = p.at.match(pattern);
-      if (matches && matches.length == 4) {
-        return [parseFloat(matches[1]), parseFloat(matches[2]), parseFloat(matches[3])];
-      } else {
-        return null;
-      }
-    }
-
-    const adjust_point = (x, y) => {
-      const at_l = get_at_coordinates();
-      if(at_l == null) {
-        throw new Error(
-          `Could not get x and y coordinates from p.at: ${p.at}`
-        );
-      }
-      const at_x = at_l[0];
-      const at_y = at_l[1];
-      const at_angle = at_l[2];
-      const adj_x = at_x + x;
-      const adj_y = at_y + y;
-
-      const radians = (Math.PI / 180) * at_angle,
-        cos = Math.cos(radians),
-        sin = Math.sin(radians),
-        nx = (cos * (adj_x - at_x)) + (sin * (adj_y - at_y)) + at_x,
-        ny = (cos * (adj_y - at_y)) - (sin * (adj_x - at_x)) + at_y;
-
-      const point_str = `${nx.toFixed(2)} ${ny.toFixed(2)}`;
-      return point_str;
-    }
 
     const gen_courtyard = (side) => {
       return `
@@ -218,22 +186,22 @@ module.exports =  {
     const gen_trace = (side, y, right) => {
       if (side === "F") {
         return `
-          (segment (start ${ adjust_point(right * 4.775, y) }) (end ${ adjust_point(right * 3.262, y) }) (width 0.25) (layer ${side}.Cu) (net 1))
-          (segment (start ${ adjust_point(right * 5.5, y) }) (end ${ adjust_point(right * 7.62, y) }) (width 0.25) (layer ${side}.Cu) (net 24))
+          (segment (start ${adjust_point(p, right * 4.775, y) }) (end ${adjust_point(p, right * 3.262, y) }) (width 0.25) (layer ${side}.Cu) (net 1))
+          (segment (start ${adjust_point(p, right * 5.5, y) }) (end ${adjust_point(p, right * 7.62, y) }) (width 0.25) (layer ${side}.Cu) (net 24))
         `
       }
       return `
-        (segment (start ${ adjust_point(right * -4.335002, y) }) (end ${ adjust_point(right * -3.610001, right * 0.72501 + y) }) (width 0.25) (layer B.Cu) (net 1))
-        (segment (start ${ adjust_point(right * -4.775, y) }) (end ${ adjust_point(right * -4.335002, y) }) (width 0.25) (layer B.Cu) (net 1))
+        (segment (start ${adjust_point(p, right * -4.335002, y) }) (end ${adjust_point(p, right * -3.610001, right * 0.72501 + y) }) (width 0.25) (layer B.Cu) (net 1))
+        (segment (start ${adjust_point(p, right * -4.775, y) }) (end ${adjust_point(p, right * -4.335002, y) }) (width 0.25) (layer B.Cu) (net 1))
 
-        (segment (start ${ adjust_point(right * -3.610001, right * 0.72501 + y) }) (end ${ adjust_point(right * -2.913999, right * 0.72501 + y) }) (width 0.25) (layer B.Cu) (net 1))
+        (segment (start ${adjust_point(p, right * -3.610001, right * 0.72501 + y) }) (end ${adjust_point(p, right * -2.913999, right * 0.72501 + y) }) (width 0.25) (layer B.Cu) (net 1))
         
-        (segment (start ${ adjust_point(right * -2.913999, right * 0.72501 + y) }) (end ${ adjust_point(right * -2.45, right * 0.45 + y) }) (width 0.25) (layer B.Cu) (net 1))
+        (segment (start ${adjust_point(p, right * -2.913999, right * 0.72501 + y) }) (end ${adjust_point(p, right * -2.45, right * 0.45 + y) }) (width 0.25) (layer B.Cu) (net 1))
 
-        (segment (start ${ adjust_point(right * -2.45, right * 0.45 + y) }) (end ${ adjust_point(right * 3.012, right * 0.45 + y) }) (width 0.25) (layer B.Cu) (net 1))
-        (segment (start ${ adjust_point(right * 3.012, right * 0.45 + y) }) (end ${ adjust_point(right * 3.262, y) }) (width 0.25) (layer B.Cu) (net 1))
+        (segment (start ${adjust_point(p, right * -2.45, right * 0.45 + y) }) (end ${adjust_point(p, right * 3.012, right * 0.45 + y) }) (width 0.25) (layer B.Cu) (net 1))
+        (segment (start ${adjust_point(p, right * 3.012, right * 0.45 + y) }) (end ${adjust_point(p, right * 3.262, y) }) (width 0.25) (layer B.Cu) (net 1))
 
-        (segment (start ${ adjust_point(right * -7.62, y) }) (end ${ adjust_point(right * -5.5, y) }) (width 0.25) (layer B.Cu) (net 23))
+        (segment (start ${adjust_point(p, right * -7.62, y) }) (end ${adjust_point(p, right * -5.5, y) }) (width 0.25) (layer B.Cu) (net 23))
       `
     }
 

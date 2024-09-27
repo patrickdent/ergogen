@@ -30,3 +30,9 @@ exports.adjust_point = (p, x, y) => {
     const point_str = `${nx.toFixed(2)} ${ny.toFixed(2)}`;
     return point_str;
 }
+
+exports.gen_via = (x, y, num, net) => {
+    return `
+    (pad ${num} thru_hole circle (at ${x} ${y}) (size 0.8 0.8) (drill 0.4) (layers *.Cu *.Mask) ${net})
+    `
+}

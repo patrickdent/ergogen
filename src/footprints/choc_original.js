@@ -10,11 +10,7 @@
 //    keycaps: default is false
 //      if true, will add choc sized keycap box around the footprint
 // 
-
-const { re } = require("mathjs")
-
 // note: hotswap and reverse can be used simultaneously
-const gen_via = require('./utils.js').gen_via
 
 module.exports = {
   params: {
@@ -82,8 +78,7 @@ module.exports = {
         ${standard}
         ${p.keycaps ? keycap : ''}
         ${pins('-', '', 'B')}
-        ${pins('', '-', 'F')}
-        ${gen_via(-8.275, -7.95, 1, p.to.str)})
+        ${pins('', '-', 'F')})
         `
     } else {
       return `

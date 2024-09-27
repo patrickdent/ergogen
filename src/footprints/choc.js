@@ -14,7 +14,7 @@
 const { re } = require("mathjs")
 
 // note: hotswap and reverse can be used simultaneously
-const gen_via = require('./utils.js').gen_via
+const utils = require('./utils.js')
 
 module.exports = {
   params: {
@@ -77,13 +77,20 @@ module.exports = {
           `
       }
     }
+
+    const left_pad_x = 8.275
+    const left_pad_y = -3.75
+
     if(p.reverse) {
       return `
         ${standard}
         ${p.keycaps ? keycap : ''}
         ${pins('-', '', 'B')}
         ${pins('', '-', 'F')}
-        ${gen_via(-8.275, -7.95, 1, p.to.str)})
+        ${utils.gen_via(-8.275, -7.95, 1, p.to.str)})
+        (segment (start ${utils.adjust_point(p, -1*left_pad_x, left_pad_y-4.2) }) (end ${utils.adjust_point(p, -8.275, -3.75) }) (width 0.25) (layer F.Cu) (net ${p.to.index}))
+        (segment (start ${utils.adjust_point(p, left_pad_x, left_pad_y) }) (end ${utils.adjust_point(p, 8.275-4.2, left_pad_y-4.2) }) (width 0.25) (layer B.Cu) (net ${p.to.index}))
+        (segment (start ${utils.adjust_point(p, 8.275-4.2, left_pad_y-4.2)}) (end ${utils.adjust_point(p, -8.275, -7.95)}) (width 0.25) (layer B.Cu) (net ${p.to.index}))
         `
     } else {
       return `
